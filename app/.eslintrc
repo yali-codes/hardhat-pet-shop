@@ -1,0 +1,51 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "extends": [
+		"plugin:vue/vue3-recommended",
+		"eslint:recommended"
+	],
+	"parserOptions": {
+		"parser": "babel-eslint"
+	},
+	"globals": {
+		"defineProps": "readonly",
+		"defineEmits": "readonly",
+		"defineExpose": "readonly"
+	},
+  "rules": {
+		"eqeqeq": 2,
+		"no-extra-semi": "off",
+		"no-useless-escape": "off",
+		"no-debugger": "off",
+		"vue/html-closing-bracket-newline": ["error", {
+			"singleline": "never",
+			"multiline": "always"
+		}],
+		"vue/html-indent": "off",
+		"vue/require-default-prop": "off",
+		"vue/attributes-order": "off",
+		"vue/max-attributes-per-line": ["off", {
+			"singleline": {
+				"max": 2
+			},
+			"multiline": {
+				"max": 1
+			}
+		}],
+		"vue/no-mutating-props": "off",
+		"vue/no-template-shadow": "off",
+		"vue/order-in-components": "off",
+		"vue/no-duplicate-attributes": "off",
+		"vue/html-self-closing": "off",
+    "vue/no-v-html": "off",
+		"vue/valid-template-root": "off",
+		"vue/comment-directive": "off",
+    "vue/singleline-html-element-content-newline": "off",
+    "vue/multiline-html-element-content-newline":"off",
+    "vue/name-property-casing": ["error", "PascalCase"],
+		"vue/no-deprecated-slot-attribute": "off"
+	}
+}

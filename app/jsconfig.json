@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"jsx": "preserve",
+		"paths": {
+			"@utils/*": ["./src/utils/*"],
+			"@hooks/*": ["./src/hooks/*"],
+			"@assets/*": ["./src/assets/*"],
+			"@styles/*": ["./src/styles/*"],
+			"@stores/*": ["./src/stores/*"],
+			"@router/*": ["./src/router/*"],
+			"@components/*": ["./src/components/*"],
+			"@directives/*": ["./src/directives/*"],
+			"@libs/*": ["./src/libs/*"]
+		}
+	},
+	"exclude": ["node_modules", "public", "dist"]
+}
