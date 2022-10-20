@@ -2,7 +2,12 @@
   <div class="pets-page">
     <div class="pet-title">
       <span>Devie's Pet Shop</span>
-      <n-button size="small" type="primary" @click="$router.back()">Back</n-button>
+      <div class="pet-title-right-btns">
+        <template v-if="noAccount">
+          <n-button size="small" type="primary" @click="handleConnectedWallet">Connect Wallet</n-button>
+        </template>
+        <n-button size="small" @click="$router.back()">Back</n-button>
+      </div>
     </div>
     <div class="pet-list">
       <template v-for="pet in pets" :key="pet.id">
@@ -24,7 +29,7 @@
                 <span>{{ pet.location }}</span>
               </p>
               <div class="pet-btns">
-                <n-button size="small" :disabled="pet.statusText === 'Adopted'" @click="adoptHanlder(pet)">
+                <n-button size="small" :disabled="getAdoptedBtnStatus(pet)" @click="adoptHanlder(pet)">
                   {{ pet.statusText }}
                 </n-button>
               </div>
@@ -44,14 +49,20 @@ export default {
 
 <script setup>
 import petData from './pet-data'
-import { onMounted, ref, toRaw } from 'vue'
-import { NButton } from 'naive-ui'
 import { useAssets } from '@hooks/index'
 import { ethStore } from '@stores/index'
+import { useEthers } from '@hooks/index'
 import { $message } from '@libs/global-api'
+import { onMounted, ref, computed } from 'vue'
+import { NButton } from 'naive-ui'
 
+// reactivity varialbles
 const pets = ref(petData || [])
+const noAccount = computed(() => !ethStore.account)
+
+// use hooks
 const { getAssetUrl } = useAssets()
+const { getAccounts } = useEthers()
 
 onMounted(() => {
   try {
@@ -63,14 +74,14 @@ onMounted(() => {
 })
 
 function _monitorBlockEvent() {
-  toRaw(ethStore.contracts.PetShop).on('AdoptedEvent', (oldValue, newValue, event) => {
+  ethStore.getContract('PetShop').on('AdoptedEvent', (oldValue, newValue, event) => {
     console.log(oldValue, newValue, event)
     _markAdoptedPets()
   })
 }
 
 async function _markAdoptedPets() {
-  const adoptedPetIds = await toRaw(ethStore.contracts.PetShop).getAdoptedPets()
+  const adoptedPetIds = await ethStore.getContract('PetShop').getAdoptedPets()
   if (adoptedPetIds.length) {
     const tempAdoptedPetIds = adoptedPetIds.map(petId => Number(petId))
     pets.value.forEach(pet => (tempAdoptedPetIds.includes(pet.id) ? (pet.statusText = 'Adopted') : 'Adopt'))
@@ -81,18 +92,29 @@ async function _markAdoptedPets() {
 async function adoptHanlder(pet) {
   try {
     // Judge whether the pet has been adopted
-    if (await toRaw(ethStore.contracts.PetShop).isAdopted(pet.id)) {
+    if (await ethStore.getContract('PetShop').isAdopted(pet.id)) {
       return
     }
 
     // Call the adopt method of smart contract
-    await toRaw(ethStore.contracts.PetShop).adopt(pet.id)
+    await ethStore.getContract('PetShop').adopt(pet.id)
 
     // Pop-up success message
     $message.success('Adopt successfully!')
   } catch (err) {
     console.error(err)
   }
+}
+
+// get status of adopted button
+function getAdoptedBtnStatus(pet) {
+  return !noAccount.value || pet.statusText === 'Adopted'
+}
+
+// connect wallet
+async function handleConnectedWallet() {
+  const accounts = await getAccounts()
+  console.log('devie::', accounts)
 }
 </script>
 

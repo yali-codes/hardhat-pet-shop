@@ -4,21 +4,8 @@ import { ethStore } from '@stores/index'
 export default function useEthers(next) {
   let _provider = null
 
-  // initialize ethers
-  const _initializeEthers = () => {
-    // metaMask
-    if (window.ethereum) {
-      _provider = new ethers.providers.Web3Provider(window.ethereum)
-      return _initialilzeContract(next)
-    }
-
-    _provider = ethers.providers.getDefaultProvider('ws://127.0.0.1:8545')
-    ethStore.setInitial()
-    _initialilzeContract(next)
-  }
-
   // initialize all smart contracts
-  const _initialilzeContract = async next => {
+  const _initialilzeContract = async () => {
     try {
       // read json file of all contracts
       // create the instance of each contract.
@@ -31,12 +18,38 @@ export default function useEthers(next) {
         )
       }
 
+      return Promise.resolve()
       // jump routing
-      next && next()
+      // next && next()
     } catch (err) {
       console.error(err)
+      return Promise.reject()
     }
   }
 
-  _initializeEthers()
+  // initialize ethers
+  const initializeEthers = async () => {
+    // metaMask
+    if (window.ethereum) {
+      _provider = new ethers.providers.Web3Provider(window.ethereum)
+      return _initialilzeContract(next)
+    }
+
+    _provider = ethers.providers.getDefaultProvider('ws://127.0.0.1:8545')
+
+    // mark ethers' initial status
+    ethStore.setInitial()
+
+    // return promise's status
+    return _initialilzeContract(next)
+  }
+
+  const getAccounts = async () => {
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+    return accounts
+  }
+
+  // initializeEthers()
+
+  return { initializeEthers, getAccounts }
 }

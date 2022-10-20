@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive, toRaw } from 'vue'
 
 export const ethStore = reactive({
   initial: false,
@@ -12,5 +12,8 @@ export const ethStore = reactive({
   },
   addContractMeta(contractName, contractMeta) {
     this.contracts[contractName] = contractMeta
+  },
+  getContract(contractName) {
+    return toRaw(this.contracts[contractName])
   },
 })
