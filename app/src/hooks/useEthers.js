@@ -18,12 +18,10 @@ export default function useEthers(next) {
         )
       }
 
-      return Promise.resolve()
-      // jump routing
-      // next && next()
+      return true
     } catch (err) {
       console.error(err)
-      return Promise.reject()
+      return false
     }
   }
 
@@ -48,8 +46,6 @@ export default function useEthers(next) {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
     return accounts
   }
-
-  // initializeEthers()
 
   return { initializeEthers, getAccounts }
 }

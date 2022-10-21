@@ -6,12 +6,11 @@ import { createApp } from 'vue'
 
 createApp(App).use(router).mount('#app', true)
 
-// Routing front guard
-router.beforeEach(async (_, __, next) => {
+// routing front guard
+router.beforeEach(async (to, from, next) => {
   if (ethStore.initial) return next()
-  // Initialize ethers and smart contract before routing jump,
-  // so the useEthers method need to carry `next` parameter.
+  // initialize ethers and smart contract before routing jump
   const { initializeEthers } = useEthers()
-  await initializeEthers()
-  next()
+  const access = await initializeEthers()
+  return access ? next() : false
 })
