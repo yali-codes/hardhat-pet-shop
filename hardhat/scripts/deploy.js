@@ -1,14 +1,12 @@
-// const { ethers, artifacts } = require("hardhat");
 const fs = require("fs");
 const path = require("path");
 
 // save contract's artifact and address in the app directory
 function saveAppFiles(contractName, address) {
-  console.log("devie::", address);
+  console.log(`devie-${contractName}::`, address);
   const contractsDir = path.join(__dirname, "..", "..", "app/src/contracts");
 
-  // if there is no `contractsDir` directory,
-  // creating the `contractsDir directory with fs
+  // if there is no `contractsDir` directory, which creates the `contractsDir directory with fs
   if (!fs.existsSync(contractsDir)) {
     fs.mkdirSync(contractsDir);
   }
@@ -39,19 +37,13 @@ async function main() {
     await deployer.getAddress()
   );
 
-  // deploy Token Contract
-  const TokenContract = await ethers.getContractFactory("Token");
-  const token = await TokenContract.deploy();
-  await token.deployed();
-  await saveAppFiles("Token", token.address);
-
   // deploy PetShop Contract
   const PetShopContract = await ethers.getContractFactory("PetShop");
   const petShop = await PetShopContract.deploy();
   await petShop.deployed();
   await saveAppFiles("PetShop", petShop.address);
 
-  console.log("Account baance:", (await deployer.getBalance()).toString());
+  console.log("Account balance:", (await deployer.getBalance()).toString());
 }
 
 // excute contract deployment

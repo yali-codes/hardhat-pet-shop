@@ -114,7 +114,7 @@ async function adoptHanlder(pet) {
     }
 
     // call the adopt method of smart contract
-    await ethStore.getContract('PetShop').adopt(pet.id)
+    await ethStore.getContract('PetShop').adopt(pet.id, ethStore.account)
 
     // pop-up success message
     message.success('Adopt successfully!')
@@ -130,8 +130,9 @@ function getAdoptedBtnStatus(pet) {
 
 // connect wallet
 async function handleConnectedWallet() {
-  const accounts = await getMetaMaskAccounts(message)
-  console.log('devie::', accounts)
+  const [newAccount] = await getMetaMaskAccounts(message)
+  console.log('devie::', newAccount)
+  ethStore.setAccount(newAccount)
 }
 </script>
 
