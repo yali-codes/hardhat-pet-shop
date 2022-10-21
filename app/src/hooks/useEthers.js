@@ -28,10 +28,10 @@ export default function useEthers(next) {
   // initialize ethers
   const initializeEthers = async () => {
     // metaMask
-    if (window.ethereum) {
-      _provider = new ethers.providers.Web3Provider(window.ethereum)
-      return _initialilzeContract(next)
-    }
+    // if (window.ethereum) {
+    //   _provider = new ethers.providers.Web3Provider(window.ethereum)
+    //   return _initialilzeContract()
+    // }
 
     _provider = ethers.providers.getDefaultProvider('ws://127.0.0.1:8545')
 
@@ -42,10 +42,38 @@ export default function useEthers(next) {
     return _initialilzeContract(next)
   }
 
-  const getAccounts = async () => {
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-    return accounts
+  // get metaMask's accounts
+  const getMetaMaskAccounts = async message => {
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      console.log('getMetaMaskAccounts::', accounts)
+      return accounts ? accounts : null
+    } catch (err) {
+      message.error('connect wallet failed')
+    }
   }
 
-  return { initializeEthers, getAccounts }
+  // listen for changes to the selected account of MetaMask
+  const onMetaMaskSelectedAccountChanged = (resetFn, initialFn) => {
+    window.ethereum.on('accountsChanged', accounts => {
+      debugger
+      if (!initialFn) {
+        throw new Error('initalFn should be required!')
+      }
+
+      if (!resetFn) {
+        throw new Error('resetFn should be required!')
+      }
+
+      const [newAccount] = accounts
+      if (!newAccount) {
+        return resetFn('there is no a connected account')
+      }
+
+      // execute initalFn method
+      initialFn(newAccount)
+    })
+  }
+
+  return { initializeEthers, getMetaMaskAccounts, onMetaMaskSelectedAccountChanged }
 }

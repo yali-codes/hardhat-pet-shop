@@ -54,26 +54,41 @@ import petData from './pet-data'
 import { useAssets } from '@hooks/index'
 import { ethStore } from '@stores/index'
 import { useEthers } from '@hooks/index'
-import { $message } from '@libs/global-api'
 import { onMounted, ref, computed } from 'vue'
-import { NButton } from 'naive-ui'
+import { NButton, useMessage } from 'naive-ui'
 
 // reactivity varialbles
+const message = useMessage()
 const pets = ref(petData || [])
-const noAccount = computed(() => !ethStore.account)
+const noAccount = computed(() => ethStore.account === null)
 
 // use hooks
 const { getAssetUrl } = useAssets()
-const { getAccounts } = useEthers()
+const { getMetaMaskAccounts, onMetaMaskSelectedAccountChanged } = useEthers()
 
 onMounted(() => {
   try {
     _markAdoptedPets()
+    _listenAccountChanged()
     _monitorBlockEvent()
+    // listening
   } catch (err) {
     console.error(err)
   }
 })
+
+function _listenAccountChanged() {
+  onMetaMaskSelectedAccountChanged(
+    msg => {
+      console.log(msg)
+      ethStore.setAccount(null)
+    },
+    newAccount => {
+      console.log('newAccount::', newAccount)
+      ethStore.setAccount(newAccount)
+    }
+  )
+}
 
 function _monitorBlockEvent() {
   ethStore.getContract('PetShop').on('AdoptedEvent', (oldValue, newValue, event) => {
@@ -90,19 +105,19 @@ async function _markAdoptedPets() {
   }
 }
 
-// Define adopted method
+// define adopted method
 async function adoptHanlder(pet) {
   try {
-    // Judge whether the pet has been adopted
+    // judge whether the pet has been adopted
     if (await ethStore.getContract('PetShop').isAdopted(pet.id)) {
       return
     }
 
-    // Call the adopt method of smart contract
+    // call the adopt method of smart contract
     await ethStore.getContract('PetShop').adopt(pet.id)
 
-    // Pop-up success message
-    $message.success('Adopt successfully!')
+    // pop-up success message
+    message.success('Adopt successfully!')
   } catch (err) {
     console.error(err)
   }
@@ -110,12 +125,12 @@ async function adoptHanlder(pet) {
 
 // get status of adopted button
 function getAdoptedBtnStatus(pet) {
-  return !noAccount.value || pet.statusText === 'Adopted'
+  return noAccount.value || pet.statusText === 'Adopted'
 }
 
 // connect wallet
 async function handleConnectedWallet() {
-  const accounts = await getAccounts()
+  const accounts = await getMetaMaskAccounts(message)
   console.log('devie::', accounts)
 }
 </script>
