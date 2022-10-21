@@ -9,34 +9,36 @@
         <n-button size="small" @click="$router.back()">Back</n-button>
       </div>
     </div>
-    <div class="pet-list">
-      <template v-for="pet in pets" :key="pet.id">
-        <div class="pet-item-container">
-          <div class="pet-item">
-            <div class="pet-item-head">{{ pet.name }}</div>
-            <div class="pet-item-body">
-              <img :src="getAssetUrl(pet.picture)" />
-              <p>
-                <strong>Breed</strong>:
-                <span>{{ pet.breed }}</span>
-              </p>
-              <p>
-                <strong>Age</strong>:
-                <span>{{ pet.age }}</span>
-              </p>
-              <p>
-                <strong>Location</strong>:
-                <span>{{ pet.location }}</span>
-              </p>
-              <div class="pet-btns">
-                <n-button size="small" :disabled="getAdoptedBtnStatus(pet)" @click="adoptHanlder(pet)">
-                  {{ pet.statusText }}
-                </n-button>
+    <div class="pet-list-container">
+      <div class="pet-list">
+        <template v-for="pet in pets" :key="pet.id">
+          <div class="pet-item-container">
+            <div class="pet-item">
+              <div class="pet-item-head">{{ pet.name }}</div>
+              <div class="pet-item-body">
+                <img :src="getAssetUrl(pet.picture)" />
+                <p>
+                  <strong>Breed</strong>:
+                  <span>{{ pet.breed }}</span>
+                </p>
+                <p>
+                  <strong>Age</strong>:
+                  <span>{{ pet.age }}</span>
+                </p>
+                <p>
+                  <strong>Location</strong>:
+                  <span>{{ pet.location }}</span>
+                </p>
+                <div class="pet-btns">
+                  <n-button size="small" :disabled="getAdoptedBtnStatus(pet)" @click="adoptHanlder(pet)">
+                    {{ pet.statusText }}
+                  </n-button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </template>
+        </template>
+      </div>
     </div>
   </div>
 </template>

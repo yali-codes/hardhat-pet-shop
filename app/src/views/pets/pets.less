@@ -1,10 +1,10 @@
 .pets-page {
-  width: 1170px;
   height: 100%;
-  margin: 0 auto;
   overflow: hidden;
   .pet-title {
     height: 70px;
+    width: 1170px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,12 +20,9 @@
       }
     }
   }
-  .pet-list {
-    display: flex;
-    flex-wrap: wrap;
+  .pet-list-container {
     height: calc(~'100% - 120px');
     overflow-y: overlay;
-
     &::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -53,6 +50,12 @@
     &::-webkit-scrollbar-corner {
       visibility: hidden;
     }
+  }
+  .pet-list {
+    width: 1170px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
   }
   .pet-item-container {
     width: 25%;
