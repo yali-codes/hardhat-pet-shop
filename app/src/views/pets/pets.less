@@ -5,13 +5,12 @@
     height: 70px;
     width: 1170px;
     margin: 0 auto;
+    padding: 0 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px;
     font-size: 36px;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 40px;
+
     box-sizing: border-box;
     .pet-title-right-btns {
       display: flex;
@@ -20,8 +19,41 @@
       }
     }
   }
+  .user-info-container {
+    width: 1170px;
+    height: 43px;
+    margin: 0 auto;
+    padding: 0 15px;
+    position: relative;
+    box-sizing: border-box;
+  }
+  .user-info-inner-bg {
+    height: 1px;
+    width: calc(~'100% - 30px');
+    position: absolute;
+    left: 15px;
+    top: 43px;
+    z-index: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  }
+  .user-info {
+    height: 100%;
+    width: calc(~'100% - 30px');
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 15px;
+    z-index: 2;
+    border-top: 1px solid #eee;
+    background-color: #fff;
+    p:nth-child(2) {
+      margin: 0 8px 0 20px;
+    }
+  }
   .pet-list-container {
-    height: calc(~'100% - 120px');
+    height: calc(~'100% - 123px');
+    margin-top: 10px;
     overflow-y: overlay;
     &::-webkit-scrollbar {
       width: 8px;
@@ -81,6 +113,10 @@
     .pet-item-body {
       padding: 15px;
       box-sizing: border-box;
+      .pet-price {
+        color: red;
+        font-weight: bold;
+      }
     }
     .pet-btns {
       display: flex;

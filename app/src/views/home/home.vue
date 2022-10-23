@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <HelloWorld msg="Hello, Devie's Pet Shop." />
+    <h1>Hello, Devie's Pet Shop.</h1>
     <n-button type="primary" size="small" circle @click="handleClick">Go</n-button>
   </div>
 </template>
@@ -12,7 +12,6 @@ export default {
 </script>
 
 <script setup>
-import HelloWorld from '@components/HelloWorld.vue'
 import { NButton } from 'naive-ui'
 import { useRouter } from '@router/index'
 

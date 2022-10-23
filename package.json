@@ -1,0 +1,23 @@
+{
+  "name": "hardhat-pet-shop",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "pnpm clean:cache && pnpm clean:artifacts && pnpm clean:contracts",
+    "clean:cache": "rimraf hardhat/cache",
+    "clean:artifacts": "rimraf hardhat/artifacts",
+    "clean:contracts": "rimraf app/src/contracts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yali-codes/hardhat-pet-shop.git"
+  },
+  "keywords": [],
+  "author": "devie.huang <120925502@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yali-codes/hardhat-pet-shop/issues"
+  },
+  "homepage": "https://github.com/yali-codes/hardhat-pet-shop#readme"
+}

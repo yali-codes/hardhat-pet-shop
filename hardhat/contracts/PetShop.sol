@@ -16,9 +16,6 @@ contract PetShop {
     // an address type variable is used to store ethereum accounts.
     address public owner;
 
-    // the fixed amount of tokens stored in an unsigned integer type variable.
-    uint256 public totalSupply = 1000000;
-
     // define hashmap for pets
     mapping(uint256 => Pet) pets;
 
@@ -31,7 +28,7 @@ contract PetShop {
     // define event
     event AdoptedEvent();
 
-    // the TransferEvent event helps off-chain aplications understand
+    // the Recharge event helps off-chain aplications understand
     // what happens within your contract.
     event TransferEvent(
         address indexed _from,
@@ -43,16 +40,21 @@ contract PetShop {
         // the owner of contract
         owner = msg.sender;
 
-        // the totalSupply is assigned to the transaction sender,
-        // which is the account that is deploying the contract.
-        balances[msg.sender] = totalSupply;
+        // owner‘s balances
+        balances[msg.sender] = owner.balance;
+        console.log("owner-balances: %s", balances[msg.sender]);
     }
 
     // function to adopt a pet
-    function adopt(uint256 petId, address from) external {
+    function adopt(uint256 petId, address from, uint256 amount) external {
         pets[petId] = Pet({adopter: from, adopted: true});
         console.log("adopt from %s", from);
         adoptedPetList.push(petId);
+
+        // save totkens from From-address‘ amount to owner's balances
+        saveTokensToOwner(from, amount);
+
+        // notify off-chain application to update pets' status
         emit AdoptedEvent();
     }
 
@@ -66,11 +68,27 @@ contract PetShop {
         return adoptedPetList;
     }
 
+    // function to save tokens to owner's balances
+    function saveTokensToOwner(address from, uint256 amount) private {
+        require(amount > 0, "Not less than 0");
+        require(balances[from] >= amount, "Not enough tokens");
+
+        console.log('saveTokensToOwner: %s', msg.sender);
+
+        // transfer
+        balances[msg.sender] += amount;
+        balances[from] -= amount;
+
+        // notify off-chain applications of the transfer.
+        emit TransferEvent(from, msg.sender, amount);
+    }
+
     // fucntion to transfer
     function transfer(address to, uint256 amount) external {
+        console.log('transfer:: %s', balances[msg.sender]);
         require(balances[msg.sender] >= amount, "Not enough tokens");
 
-        // we can print messages and values using console.log, a feature of Hardhat Network:
+        // we can print messages and values using console.log.
         console.log(
             "Transferring from %s to %s %s tokens",
             msg.sender,

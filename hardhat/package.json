@@ -1,16 +1,11 @@
 {
   "name": "pet-shop-server",
-  "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm hardhat node",
-    "compile": "pnpm hardhat compile",
-    "migrate": "pnpm hardhat --network localhost run scripts/deploy.js"
+    "com": "pnpm hardhat compile",
+    "mig": "pnpm hardhat --network localhost run scripts/deploy.js",
+    "dev": "pnpm hardhat node"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@ethersproject/providers": "^5.4.7",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",

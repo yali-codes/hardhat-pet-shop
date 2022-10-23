@@ -3,10 +3,27 @@
     <div class="pet-title">
       <span>Devie's Pet Shop</span>
       <div class="pet-title-right-btns">
-        <template v-if="noAccount">
-          <n-button size="small" type="primary" @click="handleConnectedWallet">Connect Wallet</n-button>
+        <template v-if="!account">
+          <n-button size="small" type="primary" @click="connectWalletHandler">Connect Wallet</n-button>
         </template>
         <n-button size="small" @click="$router.back()">Back</n-button>
+      </div>
+    </div>
+    <div class="user-info-container">
+      <div class="user-info-inner-bg"></div>
+      <div class="user-info">
+        <p>
+          <strong>Account: </strong>
+          <span>{{ account || 'no account' }}</span>
+        </p>
+
+        <template v-if="account">
+          <p>
+            <strong>Balances: </strong>
+            <span>{{ balances || 0 }} ETH</span>
+          </p>
+          <n-button size="tiny" type="warning" @click="buyTokenRef.show()">Transfer Tokens</n-button>
+        </template>
       </div>
     </div>
     <div class="pet-list-container">
@@ -17,6 +34,10 @@
               <div class="pet-item-head">{{ pet.name }}</div>
               <div class="pet-item-body">
                 <img :src="getAssetUrl(pet.picture)" />
+                <p>
+                  <strong>Price</strong>:
+                  <span class="pet-price">{{ pet.price + ' ETH' }}</span>
+                </p>
                 <p>
                   <strong>Breed</strong>:
                   <span>{{ pet.breed }}</span>
@@ -30,7 +51,7 @@
                   <span>{{ pet.location }}</span>
                 </p>
                 <div class="pet-btns">
-                  <n-button size="small" :disabled="getAdoptedBtnStatus(pet)" @click="adoptHanlder(pet)">
+                  <n-button size="small" :disabled="getAdoptedBtnStatus(pet)" @click="decideToAdoptPet(pet)">
                     {{ pet.statusText }}
                   </n-button>
                 </div>
@@ -40,6 +61,12 @@
         </template>
       </div>
     </div>
+
+    <!-- amodal to adopt a pet -->
+    <AdoptPet ref="adoptPetRef" @on-confirm="adoptHanlder" />
+
+    <!-- a modal to buy some tokens -->
+    <BuyTokens ref="buyTokenRef" />
   </div>
 </template>
 
@@ -51,27 +78,34 @@ export default {
 
 <script setup>
 import petData from './pet-data'
-import { useAssets } from '@hooks/index'
-import { ethStore } from '@stores/index'
-import { useEthers } from '@hooks/index'
+import AdoptPet from './components/AdoptPet.vue'
+import BuyTokens from '@components/BuyTokens.vue'
+import { ethState, walletState } from '@stores/index'
+import { useAssets, useMetaMask } from '@hooks/index'
 import { onMounted, ref, computed } from 'vue'
 import { NButton, useMessage } from 'naive-ui'
 
+// instance of the PetShop contract
+const petShop = ethState.getContract('PetShop')
+
 // reactivity varialbles
-const message = useMessage()
+const adoptPetRef = ref(null)
+const buyTokenRef = ref(null)
+const selectedPet = ref(null)
+const account = computed(() => walletState.account)
+const balances = computed(() => walletState.balances / Math.pow(10, 18))
 const pets = ref(petData || [])
-const noAccount = computed(() => ethStore.account === null)
 
 // use hooks
+const message = useMessage()
 const { getAssetUrl } = useAssets()
-const { getMetaMaskAccounts, onMetaMaskSelectedAccountChanged } = useEthers()
+const { getMetaMaskAccounts, onMetaMaskSelectedAccountChanged } = useMetaMask()
 
 onMounted(() => {
   try {
     _markAdoptedPets()
     _listenAccountChanged()
     _monitorBlockEvent()
-    // listening
   } catch (err) {
     console.error(err)
   }
@@ -81,40 +115,56 @@ function _listenAccountChanged() {
   onMetaMaskSelectedAccountChanged(
     msg => {
       console.log(msg)
-      ethStore.setAccount(null)
+      walletState.setAccount(null)
     },
     newAccount => {
       console.log('newAccount::', newAccount)
-      ethStore.setAccount(newAccount)
+      walletState.setAccount(newAccount)
     }
   )
 }
 
 function _monitorBlockEvent() {
-  ethStore.getContract('PetShop').on('AdoptedEvent', (oldValue, newValue, event) => {
-    console.log(oldValue, newValue, event)
+  petShop.on('AdoptedEvent', event => {
+    console.log('AdoptedEvent', event)
     _markAdoptedPets()
+  })
+
+  petShop.on('TransferEvent', (from, to, value) => {
+    console.log('TransferEvent::', from, to, value)
+    walletState.setBalances(petShop)
   })
 }
 
 async function _markAdoptedPets() {
-  const adoptedPetIds = await ethStore.getContract('PetShop').getAdoptedPets()
+  const adoptedPetIds = await petShop.getAdoptedPets()
   if (adoptedPetIds.length) {
     const tempAdoptedPetIds = adoptedPetIds.map(petId => Number(petId))
     pets.value.forEach(pet => (tempAdoptedPetIds.includes(pet.id) ? (pet.statusText = 'Adopted') : 'Adopt'))
   }
 }
 
+// function to decide to adopt a pet
+function decideToAdoptPet(pet) {
+  if (balances.value < pet.price) {
+    return message.warning('Not enough tokens!')
+  }
+  selectedPet.value = pet
+  adoptPetRef.value.show({ ...pet })
+}
+
 // define adopted method
+// eslint-disable-next-line no-unused-vars
 async function adoptHanlder(pet) {
   try {
     // judge whether the pet has been adopted
-    if (await ethStore.getContract('PetShop').isAdopted(pet.id)) {
+    if (await petShop.isAdopted(pet.id)) {
       return
     }
 
     // call the adopt method of smart contract
-    await ethStore.getContract('PetShop').adopt(pet.id, ethStore.account)
+    const _price = (pet.price * Math.pow(10, 18)).toString()
+    await petShop.adopt(pet.id, account.value, _price)
 
     // pop-up success message
     message.success('Adopt successfully!')
@@ -123,16 +173,15 @@ async function adoptHanlder(pet) {
   }
 }
 
-// get status of adopted button
+// function to get status of adopted button
 function getAdoptedBtnStatus(pet) {
-  return noAccount.value || pet.statusText === 'Adopted'
+  return !account.value || pet.statusText === 'Adopted'
 }
 
-// connect wallet
-async function handleConnectedWallet() {
+// function to connect wallet
+async function connectWalletHandler() {
   const [newAccount] = await getMetaMaskAccounts(message)
-  console.log('devie::', newAccount)
-  ethStore.setAccount(newAccount)
+  walletState.setAccount(newAccount)
 }
 </script>
 

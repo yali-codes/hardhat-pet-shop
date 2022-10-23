@@ -32,6 +32,7 @@ async function main() {
   }
 
   const [deployer] = await ethers.getSigners();
+  console.log("Account balances:", (await deployer.getBalance()).toString());
   console.log(
     "deploying the contracts with the account:",
     await deployer.getAddress()
@@ -43,7 +44,7 @@ async function main() {
   await petShop.deployed();
   await saveAppFiles("PetShop", petShop.address);
 
-  console.log("Account balance:", (await deployer.getBalance()).toString());
+  console.log("Account balances:", (await deployer.getBalance()).toString());
 }
 
 // excute contract deployment
