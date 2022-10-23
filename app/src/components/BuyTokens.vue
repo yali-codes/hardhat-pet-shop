@@ -68,22 +68,20 @@ const wallet = createActivedWallet()
 // function to confirm
 async function confirmHandler() {
   visiable.value = false
+
   const { amount, to } = toRaw(formModel.value)
+  const bigAmount = (amount * Math.pow(10, 18)).toString()
 
-  const bigAmount = amount * Math.pow(10, 18)
   try {
-    // const tx = await petShop.transfer(to, bigAmount.toString())
-    // const receipt = await tx.wait()
-    // if (receipt.status === 0) {
-    //   return message.error('Transaction failed!')
-    // }
+    const tx = await wallet.sendTransaction({ to, value: bigAmount })
+    const txRes = await tx.wait()
+    if (txRes.status === 0) {
+      return message.error('Transeried failed!')
+    }
 
-    const tx = await wallet.sendTransaction({ to, value: amount })
-    const receipt = await tx.wait()
-    console.log('devie:', receipt)
+    await petShop.transfer(to, bigAmount)
   } catch (err) {
     console.error(err)
-    message.error('Not enough tokens!')
   }
 }
 
@@ -94,7 +92,6 @@ function cancelHandler() {
 
 // function to show modal
 async function show() {
-  debugger
   try {
     const to = walletState.account
     const from = await petShop.owner()

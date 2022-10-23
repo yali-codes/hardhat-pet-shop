@@ -126,13 +126,13 @@ function _listenAccountChanged() {
 
 function _monitorBlockEvent() {
   petShop.on('AdoptedEvent', event => {
-    console.log('AdoptedEvent', event)
+    console.log('AdoptedEvent::', event)
     _markAdoptedPets()
   })
 
   petShop.on('TransferEvent', (from, to, value) => {
     console.log('TransferEvent::', from, to, value)
-    walletState.setBalances(petShop)
+    walletState.setBalances(account.value)
   })
 }
 

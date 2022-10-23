@@ -42,9 +42,7 @@ export default function useEthers() {
   }
 
   function createActivedWallet() {
-    const privateKey = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
-    const wallet = new ethers.Wallet(privateKey, _provider)
-    return wallet
+    return new ethers.Wallet('0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', ethState.getProvider())
   }
 
   return { initializeEthers, createActivedWallet, ethers }
