@@ -6,6 +6,7 @@ contract PetShop {
     // some string type variables to identify the token.
     string public symbol = "DPS";
     string public name = "Devie's Pet Shop";
+    uint256 totalSupply = 100000;
 
     // define struct of the pet
     struct Pet {
@@ -41,7 +42,7 @@ contract PetShop {
         owner = msg.sender;
 
         // owner‘s balances
-        balances[msg.sender] = owner.balance;
+        balances[msg.sender] = totalSupply;
         console.log("owner-balances: %s", balances[msg.sender]);
     }
 
