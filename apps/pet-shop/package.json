@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "init": "rimraf src/contracts",
     "build": "vite build",
     "preview": "vite preview"
   }
