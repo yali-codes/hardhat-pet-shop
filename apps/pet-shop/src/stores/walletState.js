@@ -1,20 +1,19 @@
 import { reactive } from 'vue'
-import ethState from './ethState'
 
 export default reactive({
   account: null,
   balances: null,
-  setAccount(account) {
+  setAccount(account, meta = null) {
     this.account = account
     if (!account) {
       this.balances = null
       return
     }
 
-    this.setBalances(account)
+    this.setBalances(account, meta)
   },
-  async setBalances(account = null) {
-    const _provider = ethState.getProvider()
-    this.balances = Number(await _provider.getBalance(account))
+  async setBalances(account = this.account, meta) {
+    if (!meta) return
+    this.balances = Number((await meta.balanceOf(account)).toString())
   },
 })

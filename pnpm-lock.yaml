@@ -55,6 +55,9 @@ importers:
       unplugin-vue-components: 0.22.9_vue@3.2.41
       vite: 3.1.8_less@4.1.3
 
+  apps/pet-shop:
+    specifiers: {}
+
   hardhat:
     specifiers:
       '@ethersproject/providers': ^5.4.7
@@ -82,9 +85,6 @@ importers:
       hardhat-gas-reporter: 1.0.9_hardhat@2.11.2
       solidity-coverage: 0.8.2_hardhat@2.11.2
       typechain: 8.1.0_typescript@4.8.4
-
-  packages/pet-shop:
-    specifiers: {}
 
 packages:
 

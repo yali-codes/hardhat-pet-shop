@@ -71,10 +71,10 @@ contract PetShop {
 
     // function to save tokens to owner's balances
     function saveTokensToOwner(address from, uint256 amount) private {
+        console.log('saveTokensToOwner: %s %s', msg.sender, amount);
         require(amount > 0, "Not less than 0");
         require(balances[from] >= amount, "Not enough tokens");
 
-        console.log('saveTokensToOwner: %s', msg.sender);
 
         // transfer
         balances[msg.sender] += amount;
