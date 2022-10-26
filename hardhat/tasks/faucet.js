@@ -29,13 +29,9 @@ task('faucet', 'Sends ETH and tokens to an address')
       return
     }
 
-    const token = await ethers.getContractAt('PetShop', artifact.address)
-    const tx = await token.transfer(receiver, 100)
-    await tx.wait()
-
-    const [owner] = await ethers.getSigners()
+    const [, owner] = await ethers.getSigners()
     const tx2 = await owner.sendTransaction({ to: receiver, value: ethers.constants.WeiPerEther })
     await tx2.wait()
 
-    console.log(`Transferred 1 CPAY and 100 tokens to ${receiver}`)
+    console.log(`Transferred 1 CPAY to ${receiver}`)
   })

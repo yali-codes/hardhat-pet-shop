@@ -15,7 +15,7 @@ contract PetShop {
     }
 
     // an address type variable is used to store ethereum accounts.
-    address public owner;
+    address payable public owner;
 
     // define hashmap for pets
     mapping(uint256 => Pet) pets;
@@ -27,7 +27,7 @@ contract PetShop {
     mapping(address => uint256) balances;
 
     // define event
-    event AdoptedEvent();
+    event AdoptedEvent(address indexed _from, address indexed _to, uint256 petId);
 
     // the Recharge event helps off-chain aplications understand
     // what happens within your contract.
@@ -39,7 +39,7 @@ contract PetShop {
 
     constructor() {
         // the owner of contract
-        owner = msg.sender;
+        owner = payable(msg.sender);
 
         // owner‘s balances
         balances[msg.sender] = totalSupply;
@@ -47,16 +47,19 @@ contract PetShop {
     }
 
     // function to adopt a pet
-    function adopt(uint256 petId, address from, uint256 amount) external {
+    function adopt(uint256 petId, address from) external payable {
         pets[petId] = Pet({adopter: from, adopted: true});
         console.log("adopt from %s", from);
         adoptedPetList.push(petId);
 
         // save totkens from From-address‘ amount to owner's balances
-        saveTokensToOwner(from, amount);
+        // saveTokensToOwner(from, amount);
+				console.log("before balance: %s", owner.balance);
+				withDraw();
+				console.log("after balance: %s", owner.balance);
 
         // notify off-chain application to update pets' status
-        emit AdoptedEvent();
+        emit AdoptedEvent(owner, from, petId);
     }
 
     // function to check pet's adopted status
@@ -109,4 +112,8 @@ contract PetShop {
     function balanceOf(address account) external view returns (uint256) {
         return balances[account];
     }
+
+		function withDraw() public {
+			owner.transfer(address(this).balance);
+		}
 }
