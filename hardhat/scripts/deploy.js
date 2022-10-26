@@ -4,7 +4,7 @@ const path = require('path')
 // save contract's artifact and address in the app directory
 function saveAppFiles(contractName, address) {
   console.log(`devie-${contractName}::`, address)
-  const contractsDir = path.join(__dirname, '..', '..', 'packages/pet-shop/src/contracts')
+  const contractsDir = path.join(__dirname, '..', '..', 'apps/pet-shop/src/contracts')
 
   // if there is no `contractsDir` directory, which creates the `contractsDir directory with fs
   if (!fs.existsSync(contractsDir)) {

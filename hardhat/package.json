@@ -2,9 +2,10 @@
   "name": "server",
   "main": "index.js",
   "scripts": {
-    "com": "pnpm hardhat compile",
-    "mig": "pnpm hardhat --network localhost run scripts/deploy.js",
-    "dev": "pnpm hardhat node"
+    "dev": "pnpm hardhat node",
+    "compile": "pnpm hardhat compile",
+    "migrate": "pnpm hardhat --network localhost run scripts/deploy.js",
+    "del": "rimraf artifacts && rimraf cache"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.4.7",

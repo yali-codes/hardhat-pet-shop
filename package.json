@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "pnpm clean:cache && pnpm clean:artifacts && pnpm clean:contracts",
-    "clean:cache": "rimraf hardhat/cache",
-    "clean:artifacts": "rimraf hardhat/artifacts",
-    "clean:contracts": "rimraf app/src/contracts"
+    "del": "pnpm -r del",
+		"clean": "rimraf node_modules **/*/node_modules",
+    "dev:pet": "pnpm --filter @app/pet dev",
+    "dev:server": "pnpm --filter server dev",
+    "dev:server:compile": "pnpm --filter server compile",
+    "dev:server:migrate": "pnpm --filter server migrate"
   },
   "repository": {
     "type": "git",
