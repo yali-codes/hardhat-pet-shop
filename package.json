@@ -7,10 +7,10 @@
     "del": "pnpm -r del",
     "clean": "rimraf node_modules **/*/node_modules",
     "dev:pet": "pnpm --filter @app/pet dev",
-    "dev:server": "pnpm --filter server dev",
-    "dev:server:compile": "pnpm --filter server compile",
-    "dev:server:migrate": "pnpm --filter server migrate",
-    "h:server": "pnpm --filter server h"
+    "dev:serve": "pnpm --filter serve dev",
+    "compile": "pnpm --filter serve compile",
+    "migrate": "pnpm --filter serve migrate",
+    "h": "pnpm --filter serve h"
   },
   "repository": {
     "type": "git",
