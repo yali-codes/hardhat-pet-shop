@@ -3,14 +3,11 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "dev",
+			"script": "dev:serve",
+			"label": "DevServe",
 			"problemMatcher": [],
-			"label": "npm:dev",
-			"detail": "pnpm hardhat node",
+			"detail": "pnpm dev:serve",
 			"isBackground": true,
-			"options": {
-				"cwd": "${workspaceRoot}/hardhat",
-			}
-		}
+		},
 	]
 }
