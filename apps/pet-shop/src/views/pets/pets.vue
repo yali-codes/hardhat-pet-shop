@@ -20,7 +20,7 @@
         <template v-if="account">
           <p>
             <strong>Balances: </strong>
-            <span>{{ balances || 0 }} PetETH</span>
+            <span>{{ balances || 0 }} CPAY</span>
           </p>
           <n-button size="tiny" type="warning" @click="buyTokenRef.show()">Transfer Tokens</n-button>
         </template>
@@ -36,7 +36,7 @@
                 <img :src="getAssetUrl(pet.picture)" />
                 <p>
                   <strong>Price</strong>:
-                  <span class="pet-price">{{ pet.price + ' PetETH' }}</span>
+                  <span class="pet-price">{{ pet.price + ' CPAY' }}</span>
                 </p>
                 <p>
                   <strong>Breed</strong>:
@@ -133,7 +133,7 @@ function _monitorBlockEvent() {
 
   petShop.on('TransferEvent', (from, to, value) => {
     console.log('TransferEvent::', from, to, value)
-    walletState.setBalances(account.value)
+    walletState.setBalances(account.value, petShop)
   })
 }
 
@@ -164,9 +164,10 @@ async function adoptHanlder(pet) {
     }
 
     // call the adopt method of smart contract
-    const _amount = ethers.utils.formatEther(pet.price)
-    console.log(_amount.toString())
-    await petShop.adopt(pet.id, account.value, _amount)
+    await petShop.adopt(pet.id, account.value, { value: ethers.utils.parseEther(pet.price.toString()) })
+
+    // // tansfer adopted fee to contract account that is owner
+    // await petShop.withDraw()
 
     // pop-up success message
     message.success('Adopt successfully!')
