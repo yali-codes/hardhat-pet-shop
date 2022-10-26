@@ -5,9 +5,8 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 Try running some of the following tasks:
 
 ```shell
-pnpm h:server
-pnpm test:server
-REPORT_GAS=true pnpm test:server
+pnpm h
 pnpm dev:server
-pnpm dev:migrate
+pnpm migrate
+pnpm compile
 ```
