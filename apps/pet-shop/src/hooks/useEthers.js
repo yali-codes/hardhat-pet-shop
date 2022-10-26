@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { ethers, BigNumber, FixedNumber } from 'ethers'
 import { ethState } from '@stores/index'
 
 export default function useEthers() {
@@ -45,5 +45,5 @@ export default function useEthers() {
     return new ethers.Wallet('0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', ethState.getProvider())
   }
 
-  return { initializeEthers, createActivedWallet, ethers }
+  return { initializeEthers, createActivedWallet, ethers, BigNumber, FixedNumber }
 }

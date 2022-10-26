@@ -6,7 +6,8 @@
     "del": "rimraf artifacts && rimraf cache",
     "compile": "pnpm hardhat compile",
     "migrate": "pnpm hardhat --network localhost run scripts/deploy.js",
-    "dev": "pnpm hardhat node"
+    "dev": "pnpm hardhat node",
+    "faucet": "pnpm hardhat --network localhost faucet 0x675f91aa2314ad5962d56b9641c379d298fd0e2c"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.4.7",

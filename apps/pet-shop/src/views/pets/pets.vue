@@ -20,7 +20,7 @@
         <template v-if="account">
           <p>
             <strong>Balances: </strong>
-            <span>{{ balances || 0 }} ETH</span>
+            <span>{{ balances || 0 }} PetETH</span>
           </p>
           <n-button size="tiny" type="warning" @click="buyTokenRef.show()">Transfer Tokens</n-button>
         </template>
@@ -36,7 +36,7 @@
                 <img :src="getAssetUrl(pet.picture)" />
                 <p>
                   <strong>Price</strong>:
-                  <span class="pet-price">{{ pet.price + ' ETH' }}</span>
+                  <span class="pet-price">{{ pet.price + ' PetETH' }}</span>
                 </p>
                 <p>
                   <strong>Breed</strong>:
@@ -81,7 +81,7 @@ import petData from './pet-data'
 import AdoptPet from './components/AdoptPet.vue'
 import BuyTokens from '@components/BuyTokens.vue'
 import { ethState, walletState } from '@stores/index'
-import { useAssets, useMetaMask } from '@hooks/index'
+import { useAssets, useMetaMask, useEthers } from '@hooks/index'
 import { onMounted, ref, computed } from 'vue'
 import { NButton, useMessage } from 'naive-ui'
 
@@ -93,12 +93,13 @@ const adoptPetRef = ref(null)
 const buyTokenRef = ref(null)
 const selectedPet = ref(null)
 const account = computed(() => walletState.account)
-const balances = computed(() => walletState.balances / Math.pow(10, 18))
+const balances = computed(() => walletState.balances)
 const pets = ref(petData || [])
 
 // use hooks
 const message = useMessage()
 const { getAssetUrl } = useAssets()
+const { ethers } = useEthers()
 const { getMetaMaskAccounts, onMetaMaskSelectedAccountChanged } = useMetaMask()
 
 onMounted(() => {
@@ -119,7 +120,7 @@ function _listenAccountChanged() {
     },
     newAccount => {
       console.log('newAccount::', newAccount)
-      walletState.setAccount(newAccount)
+      walletState.setAccount(newAccount, petShop)
     }
   )
 }
@@ -163,8 +164,9 @@ async function adoptHanlder(pet) {
     }
 
     // call the adopt method of smart contract
-    const _price = (pet.price * Math.pow(10, 18)).toString()
-    await petShop.adopt(pet.id, account.value, _price)
+    const _amount = ethers.utils.formatEther(pet.price)
+    console.log(_amount.toString())
+    await petShop.adopt(pet.id, account.value, _amount)
 
     // pop-up success message
     message.success('Adopt successfully!')
@@ -181,7 +183,7 @@ function getAdoptedBtnStatus(pet) {
 // function to connect wallet
 async function connectWalletHandler() {
   const [newAccount] = await getMetaMaskAccounts(message)
-  walletState.setAccount(newAccount)
+  walletState.setAccount(newAccount, petShop)
 }
 </script>
 

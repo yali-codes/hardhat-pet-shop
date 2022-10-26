@@ -14,7 +14,7 @@ task('faucet', 'Sends ETH and tokens to an address')
       )
     }
 
-    const artifactDir = path.join(__dirname, '../../app/src/contracts/PetShop.json')
+    const artifactDir = path.join(__dirname, '../../apps/pet-shop/src/contracts/PetShop.json')
 
     if (!fs.existsSync(artifactDir)) {
       console.error('You need to deploy your contract first')
@@ -29,18 +29,13 @@ task('faucet', 'Sends ETH and tokens to an address')
       return
     }
 
-    // 假设 ETH 和 CPAY 是等价的
-    const amount = (10 * Math.pow(10, 18)).toString()
     const token = await ethers.getContractAt('PetShop', artifact.address)
-    const tx = await token.transfer(receiver, amount)
+    const tx = await token.transfer(receiver, 100)
     await tx.wait()
 
     const [owner] = await ethers.getSigners()
-    const tx2 = await owner.sendTransaction({
-      to: receiver,
-      value: amount,
-    })
+    const tx2 = await owner.sendTransaction({ to: receiver, value: ethers.constants.WeiPerEther })
     await tx2.wait()
 
-    console.log(`Transferred 100 tokens to ${receiver}`)
+    console.log(`Transferred 1 CPAY and 100 tokens to ${receiver}`)
   })
