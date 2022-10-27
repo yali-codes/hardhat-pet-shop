@@ -20,12 +20,25 @@ function saveAppFiles(contractName, address) {
 }
 
 async function main() {
+  if (network.name === 'hardhat') {
+    console.warn(
+      'You are trying to deploy a contract to the Hardhat Network, which' +
+        'gets automatically created and destroyed every time. Use the Hardhat' +
+        " option '--network localhost'"
+    )
+  }
+
+  const [deployer] = await ethers.getSigners()
+  console.log('Account balances:', (await deployer.getBalance()).toString())
+  console.log('deploying the contracts with the account:', await deployer.getAddress())
+
   // deploy PetShop Contract
   const PetShopContract = await ethers.getContractFactory('PetShop')
   const petShop = await PetShopContract.deploy()
   await petShop.deployed()
   await saveAppFiles('PetShop', petShop.address)
-  console.log('PetShop was deployed to ', petShop.address)
+
+  console.log('Account balances:', (await deployer.getBalance()).toString())
 }
 
 // excute contract deployment

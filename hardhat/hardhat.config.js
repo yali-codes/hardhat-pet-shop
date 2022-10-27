@@ -1,5 +1,9 @@
 require('./tasks/faucet.js')
 require('@nomicfoundation/hardhat-toolbox')
+require('dotenv').config()
+
+const GOERLI_URL = process.env.GOERLI_URL
+const PRIVATE_KEY = process.env.PRIVATE_KEY
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -7,6 +11,10 @@ module.exports = {
   networks: {
     hardhat: {
       chainId: 1337,
+    },
+    goerli: {
+      url: GOERLI_URL,
+      accounts: [PRIVATE_KEY],
     },
   },
 }

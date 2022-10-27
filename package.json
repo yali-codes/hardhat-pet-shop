@@ -5,14 +5,15 @@
   "main": "index.js",
   "scripts": {
     "del": "pnpm -r del",
+    "h": "pnpm --filter serve h",
     "clean": "rimraf node_modules **/*/node_modules",
-    "dev:pet": "pnpm --filter @app/pet dev",
     "build": "pnpm --filter @app/pet build",
-    "dev:serve": "pnpm --filter serve dev",
     "faucet": "pnpm --filter serve faucet",
     "compile": "pnpm --filter serve compile",
     "migrate": "pnpm --filter serve migrate",
-    "h": "pnpm --filter serve h"
+    "dev:pet": "pnpm --filter @app/pet dev",
+    "dev:serve": "pnpm --filter serve dev",
+    "dev:migrate": "pnpm --filter serve dev:migrate"
   },
   "repository": {
     "type": "git",

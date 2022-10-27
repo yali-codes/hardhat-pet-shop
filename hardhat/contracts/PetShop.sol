@@ -2,6 +2,8 @@
 pragma solidity ^0.8.9;
 import 'hardhat/console.sol';
 
+// deployed to Goerli at 0xA3abbDA93A850758F85598A47cf186C0BCA085aC
+
 contract PetShop {
   // define struct of the pet
   struct Pet {
