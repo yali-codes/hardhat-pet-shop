@@ -63,7 +63,7 @@
     </div>
 
     <!-- amodal to adopt a pet -->
-    <AdoptPet ref="adoptPetRef" @on-confirm="adoptHanlder" />
+    <AdoptPet ref="adoptPetRef" @on-confirm="confirmAdoptionHanlder" />
 
     <!-- a modal to buy some tokens -->
     <BuyTokens ref="buyTokenRef" />
@@ -120,28 +120,24 @@ function _listenAccountChanged() {
     },
     newAccount => {
       console.log('newAccount::', newAccount)
-      walletState.setAccount(newAccount, petShop)
+      walletState.setAccount(newAccount)
     }
   )
 }
 
 function _monitorBlockEvent() {
-  petShop.on('AdoptedEvent', event => {
-    console.log('AdoptedEvent::', event)
-    _markAdoptedPets()
-  })
-
   petShop.on('TransferEvent', (from, to, value) => {
     console.log('TransferEvent::', from, to, value)
-    walletState.setBalances(account.value, petShop)
+    walletState.setBalances(account.value)
+    _markAdoptedPets()
   })
 }
 
 async function _markAdoptedPets() {
-  const adoptedPetIds = await petShop.getAdoptedPets()
-  if (adoptedPetIds.length) {
-    const tempAdoptedPetIds = adoptedPetIds.map(petId => Number(petId))
-    pets.value.forEach(pet => (tempAdoptedPetIds.includes(pet.id) ? (pet.statusText = 'Adopted') : 'Adopt'))
+  const petIds = await petShop.getAdoptedPets()
+  if (petIds.length) {
+    const tempPetIds = petIds.map(petId => Number(petId))
+    pets.value.forEach(pet => (tempPetIds.includes(pet.id) ? (pet.statusText = 'Adopted') : 'Adopt'))
   }
 }
 
@@ -156,7 +152,7 @@ function decideToAdoptPet(pet) {
 
 // define adopted method
 // eslint-disable-next-line no-unused-vars
-async function adoptHanlder(pet) {
+async function confirmAdoptionHanlder(pet) {
   try {
     // judge whether the pet has been adopted
     if (await petShop.isAdopted(pet.id)) {
@@ -184,7 +180,7 @@ function getAdoptedBtnStatus(pet) {
 // function to connect wallet
 async function connectWalletHandler() {
   const [newAccount] = await getMetaMaskAccounts(message)
-  walletState.setAccount(newAccount, petShop)
+  walletState.setAccount(newAccount)
 }
 </script>
 

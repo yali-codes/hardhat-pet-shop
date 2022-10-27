@@ -1,119 +1,75 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
-import "hardhat/console.sol";
+import 'hardhat/console.sol';
 
 contract PetShop {
-    // some string type variables to identify the token.
-    string public symbol = "DPS";
-    string public name = "Devie's Pet Shop";
-    uint256 totalSupply = 100000;
+  // define struct of the pet
+  struct Pet {
+    address adopter;
+    bool adopted;
+  }
 
-    // define struct of the pet
-    struct Pet {
-        address adopter;
-        bool adopted;
-    }
+  // an address type variable is used to store ethereum accounts.
+  address payable public owner;
 
-    // an address type variable is used to store ethereum accounts.
-    address payable public owner;
+  // define hashmap for pets
+  mapping(uint256 => Pet) pets;
 
-    // define hashmap for pets
-    mapping(uint256 => Pet) pets;
+  // define variable for adoped pet list
+  uint256[] public adoptedPets;
 
-    // define variable for adoped pet list
-    uint256[] public adoptedPetList;
+  // a mapping is a key/value map. Here we store each account balance.
+  mapping(address => uint256) balances;
 
-    // a mapping is a key/value map. Here we store each account balance.
-    mapping(address => uint256) balances;
+  // the Recharge event helps off-chain aplications understand
+  // what happens within your contract.
+  event TransferEvent(address indexed from, address indexed to, uint256 value);
 
-    // define event
-    event AdoptedEvent(address indexed _from, address indexed _to, uint256 petId);
+  constructor() {
+    // the owner of contract
+    owner = payable(msg.sender);
+  }
 
-    // the Recharge event helps off-chain aplications understand
-    // what happens within your contract.
-    event TransferEvent(
-        address indexed _from,
-        address indexed _to,
-        uint256 _value
-    );
+  // function to check pet's adopted status
+  function isAdopted(uint256 petId) external view returns (bool) {
+    return pets[petId].adopted;
+  }
 
-    constructor() {
-        // the owner of contract
-        owner = payable(msg.sender);
+  // function to get adopted pets
+  function getAdoptedPets() external view returns (uint256[] memory) {
+    return adoptedPets;
+  }
 
-        // owner‘s balances
-        balances[msg.sender] = totalSupply;
-        console.log("owner-balances: %s", balances[msg.sender]);
-    }
+  // function to adopt a pet
+  function adopt(uint256 petId, address from) external payable {
+    pets[petId] = Pet({ adopter: from, adopted: true });
+    adoptedPets.push(petId);
 
-    // function to adopt a pet
-    function adopt(uint256 petId, address from) external payable {
-        pets[petId] = Pet({adopter: from, adopted: true});
-        console.log("adopt from %s", from);
-        adoptedPetList.push(petId);
+    console.log("before: Owner's balance: %s", owner.balance);
+    withDraw();
 
-        // save totkens from From-address‘ amount to owner's balances
-        // saveTokensToOwner(from, amount);
-				console.log("before balance: %s", owner.balance);
-				withDraw();
-				console.log("after balance: %s", owner.balance);
+    // notify off-chain application to update pets' status
+    emit TransferEvent(owner, from, petId);
+  }
 
-        // notify off-chain application to update pets' status
-        emit AdoptedEvent(owner, from, petId);
-    }
+  function withDraw() public {
+    (bool success, ) = owner.call{ value: address(this).balance }('');
+    require(success, 'Transfer failed.');
+    console.log("after: Owner's balance: %s", owner.balance);
+  }
 
-    // function to check pet's adopted status
-    function isAdopted(uint256 petId) external view returns (bool) {
-        return pets[petId].adopted;
-    }
+  // fucntion to transfer
+  function transfer(
+    address from,
+    address to,
+    uint256 amount
+  ) external payable {
+    console.log('transfer:: %s', balances[msg.sender]);
+    require(from.balance >= amount, 'Not enough tokens');
 
-    // function to get adopted pets
-    function getAdoptedPets() external view returns (uint256[] memory) {
-        return adoptedPetList;
-    }
+    // transfer the amount.
 
-    // function to save tokens to owner's balances
-    function saveTokensToOwner(address from, uint256 amount) private {
-        console.log('saveTokensToOwner: %s %s', msg.sender, amount);
-        require(amount > 0, "Not less than 0");
-        require(balances[from] >= amount, "Not enough tokens");
-
-
-        // transfer
-        balances[msg.sender] += amount;
-        balances[from] -= amount;
-
-        // notify off-chain applications of the transfer.
-        emit TransferEvent(from, msg.sender, amount);
-    }
-
-    // fucntion to transfer
-    function transfer(address to, uint256 amount) external {
-        console.log('transfer:: %s', balances[msg.sender]);
-        require(balances[msg.sender] >= amount, "Not enough tokens");
-
-        // we can print messages and values using console.log.
-        console.log(
-            "Transferring from %s to %s %s tokens",
-            msg.sender,
-            to,
-            amount
-        );
-
-        // transfer the amount.
-        balances[msg.sender] -= amount;
-        balances[to] += amount;
-
-        // notify off-chain applications of the transfer.
-        emit TransferEvent(msg.sender, to, amount);
-    }
-
-    // function to query the balance of account
-    function balanceOf(address account) external view returns (uint256) {
-        return balances[account];
-    }
-
-		function withDraw() public {
-			owner.transfer(address(this).balance);
-		}
+    // notify off-chain applications of the transfer.
+    emit TransferEvent(msg.sender, to, amount);
+  }
 }

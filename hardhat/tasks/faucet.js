@@ -30,8 +30,9 @@ task('faucet', 'Sends ETH and tokens to an address')
     }
 
     const [, owner] = await ethers.getSigners()
-    const tx2 = await owner.sendTransaction({ to: receiver, value: ethers.constants.WeiPerEther })
+    const amount = '2'
+    const tx2 = await owner.sendTransaction({ to: receiver, value: ethers.utils.parseEther(amount) })
     await tx2.wait()
 
-    console.log(`Transferred 1 CPAY to ${receiver}`)
+    console.log(`Transferred ${amount} CPAY to ${receiver}`)
   })
