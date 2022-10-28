@@ -7,7 +7,7 @@ export default [
     breed: 'Scottish Terrier',
     location: 'Lisco, Alabama',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 1,
@@ -17,7 +17,7 @@ export default [
     breed: 'Scottish Terrier',
     location: 'Tooleville, West Virginia',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ export default [
     breed: 'French Bulldog',
     location: 'Freeburn, Idaho',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ export default [
     breed: 'Boxer',
     location: 'Camas, Pennsylvania',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ export default [
     breed: 'French Bulldog',
     location: 'Gerber, South Dakota',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 5,
@@ -57,7 +57,7 @@ export default [
     breed: 'French Bulldog',
     location: 'Innsbrook, Illinois',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 6,
@@ -67,7 +67,7 @@ export default [
     breed: 'Golden Retriever',
     location: 'Soudan, Louisiana',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 7,
@@ -77,7 +77,7 @@ export default [
     breed: 'Golden Retriever',
     location: 'Jacksonwald, Palau',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 8,
@@ -87,7 +87,7 @@ export default [
     breed: 'French Bulldog',
     location: 'Honolulu, Hawaii',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 9,
@@ -97,7 +97,7 @@ export default [
     breed: 'Boxer',
     location: 'Matheny, Utah',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 10,
@@ -107,7 +107,7 @@ export default [
     breed: 'Boxer',
     location: 'Tyhee, Indiana',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 11,
@@ -117,7 +117,7 @@ export default [
     breed: 'Scottish Terrier',
     location: 'Windsor, Montana',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 12,
@@ -127,7 +127,7 @@ export default [
     breed: 'French Bulldog',
     location: 'Kingstowne, Nevada',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 13,
@@ -137,7 +137,7 @@ export default [
     breed: 'Golden Retriever',
     location: 'Sultana, Massachusetts',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 14,
@@ -147,7 +147,7 @@ export default [
     breed: 'Golden Retriever',
     location: 'Broadlands, Oregon',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
   {
     id: 15,
@@ -157,6 +157,6 @@ export default [
     breed: 'Golden Retriever',
     location: 'Dawn, Wisconsin',
     statusText: 'Adopt',
-    price: 0.15,
+    price: 0.001,
   },
 ]
