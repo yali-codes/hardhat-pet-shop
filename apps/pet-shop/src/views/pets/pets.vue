@@ -20,7 +20,7 @@
         <template v-if="account">
           <p>
             <strong>Balances: </strong>
-            <span>{{ balances || 0 }} CPAY</span>
+            <span>{{ balances || 0 }} GOA</span>
           </p>
           <n-button size="tiny" type="warning" @click="buyTokenRef.show()">Transfer Tokens</n-button>
         </template>
@@ -36,7 +36,7 @@
                 <img :src="getAssetUrl(pet.picture)" />
                 <p>
                   <strong>Price</strong>:
-                  <span class="pet-price">{{ pet.price + ' CPAY' }}</span>
+                  <span class="pet-price">{{ pet.price + ' GOA' }}</span>
                 </p>
                 <p>
                   <strong>Breed</strong>:
@@ -89,12 +89,12 @@ import { NButton, useMessage } from 'naive-ui'
 const petShop = ethState.getContract('PetShop')
 
 // reactivity varialbles
+const pets = ref(petData)
 const adoptPetRef = ref(null)
 const buyTokenRef = ref(null)
 const selectedPet = ref(null)
 const account = computed(() => walletState.account)
 const balances = computed(() => walletState.balances)
-const pets = ref(petData || [])
 
 // use hooks
 const message = useMessage()
@@ -160,14 +160,13 @@ async function confirmAdoptionHanlder(pet) {
     }
 
     // call the adopt method of smart contract
-    await petShop.adopt(pet.id, account.value, { value: ethers.utils.parseEther(pet.price.toString()) })
-
-    // // tansfer adopted fee to contract account that is owner
-    // await petShop.withDraw()
+    const tx = await petShop.adopt(pet.id, account.value, { value: ethers.utils.parseEther(pet.price.toString()) })
+    tx.wait()
 
     // pop-up success message
     message.success('Adopt successfully!')
   } catch (err) {
+    message.error('Cancel the transaction!')
     console.error(err)
   }
 }
