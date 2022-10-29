@@ -8,7 +8,8 @@
     "compile": "pnpm hardhat compile",
     "faucet": "pnpm hardhat --network localhost faucet 0x675f91aa2314ad5962d56b9641c379d298fd0e2c",
     "migrate": "pnpm hardhat run scripts/deploy.js --network goerli",
-    "dev:migrate": "pnpm hardhat run scripts/adopt-pet.js --network localhost"
+    "dev:migrate": "pnpm hardhat run scripts/adopt-pet.js --network localhost",
+    "test": "pnpm hardhat test"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.4.7",

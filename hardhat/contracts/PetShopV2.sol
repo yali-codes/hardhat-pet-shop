@@ -4,7 +4,7 @@ import 'hardhat/console.sol';
 
 // deployed to Goerli at 0xA3abbDA93A850758F85598A47cf186C0BCA085aC
 
-contract PetShop {
+contract PetShopV2 {
   // define struct of the pet
   struct Pet {
     address adopter;

@@ -13,7 +13,8 @@
     "migrate": "pnpm --filter serve migrate",
     "dev:pet": "pnpm --filter @app/pet dev",
     "dev:serve": "pnpm --filter serve dev",
-    "dev:migrate": "pnpm --filter serve dev:migrate"
+    "dev:migrate": "pnpm --filter serve dev:migrate",
+    "test:serve": "pnpm --filter serve test"
   },
   "repository": {
     "type": "git",
