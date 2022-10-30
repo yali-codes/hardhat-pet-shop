@@ -1,0 +1,118 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "txHash": "0xc7cb6cc8695944b8a5b2adf216878a37b7e44f972f4b4736157c0de6c66c2eca"
+  },
+  "proxies": [
+    {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0x48eb374c9d3c7923b1d24d9f056c2e17247a1181c7b4e04a55a1f4872fbb92e9",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "txHash": "0x67754fe2b213dfe97d3892a24b7d9c45d9a9c499f4db09fee80c4a0371c9fd9e",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "d326f85a1f2d295fd8bfd58329469bb4bfd3c74c5ee6ded433b310cf61f6fa6d": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0xc70209e19fff61eb0a4588c1df4241e349c0d6b4c1ee5100831dce45bb90db82",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "x",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "PetShop",
+            "src": "contracts\\PetShop.sol:8"
+          },
+          {
+            "label": "owner",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address_payable",
+            "contract": "PetShop",
+            "src": "contracts\\PetShop.sol:17"
+          },
+          {
+            "label": "pets",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_struct(Pet)9_storage)",
+            "contract": "PetShop",
+            "src": "contracts\\PetShop.sol:20"
+          },
+          {
+            "label": "adoptedPets",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "PetShop",
+            "src": "contracts\\PetShop.sol:23"
+          },
+          {
+            "label": "balances",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "PetShop",
+            "src": "contracts\\PetShop.sol:26"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Pet)9_storage)": {
+            "label": "mapping(uint256 => struct PetShop.Pet)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Pet)9_storage": {
+            "label": "struct PetShop.Pet",
+            "members": [
+              {
+                "label": "adopter",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adopted",
+                "type": "t_bool",
+                "offset": 20,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    }
+  }
+}

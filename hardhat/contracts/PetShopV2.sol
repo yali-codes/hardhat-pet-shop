@@ -27,10 +27,15 @@ contract PetShopV2 {
   // what happens within your contract.
   event TransferEvent(address indexed from, address indexed to, uint256 value);
 
-  constructor() {
-    // the owner of contract
+  // constructor() {
+  //   // the owner of contract
+  //   owner = payable(msg.sender);
+  // }
+
+	function setOwner() external {
+		// the owner of contract
     owner = payable(msg.sender);
-  }
+	}
 
   // function to check pet's adopted status
   function isAdopted(uint256 petId) external view returns (bool) {
@@ -76,4 +81,8 @@ contract PetShopV2 {
   function getBalance() external view returns (uint256) {
     return address(this).balance;
   }
+
+	function sayHello() external pure returns (string memory) {
+		return "Hlelo, solidity.";
+	}
 }

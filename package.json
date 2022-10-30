@@ -11,9 +11,11 @@
     "faucet": "pnpm --filter serve faucet",
     "compile": "pnpm --filter serve compile",
     "migrate": "pnpm --filter serve migrate",
+    "upgrade": "pnpm --filter serve upgrade",
     "dev:pet": "pnpm --filter @app/pet dev",
     "dev:serve": "pnpm --filter serve dev",
     "dev:migrate": "pnpm --filter serve dev:migrate",
+    "dev:upgrade": "pnpm --filter serve dev:upgrade",
     "test:serve": "pnpm --filter serve test"
   },
   "repository": {

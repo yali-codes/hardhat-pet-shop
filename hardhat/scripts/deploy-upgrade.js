@@ -3,7 +3,6 @@ const path = require('path')
 
 // save contract's artifact and address in the app directory
 function saveAppFiles(contractName, address) {
-  console.log(`devie-${contractName}::`, address)
   const contractsDir = path.join(__dirname, '..', '..', 'apps/pet-shop/src/contracts')
 
   // if there is no `contractsDir` directory, which creates the `contractsDir directory with fs
@@ -21,11 +20,10 @@ function saveAppFiles(contractName, address) {
 
 async function main() {
   // deploy PetShop Contract
-  const PetShopContract = await ethers.getContractFactory('PetShop')
-  const petShop = await upgrades.deployProxy(PetShopContract, [], { initializer: 'setOwner' })
-  await petShop.deployed()
+  const PetShopV2Contract = await ethers.getContractFactory('PetShopV2')
+  const petShopV2 = await upgrades.upgradeProxy(0xa3abbda93a850758f85598a47cf186c0bca085ac, PetShopV2Contract)
   await saveAppFiles('PetShop', petShop.address)
-  console.log('PetShop was deployed to ', petShop.address)
+  console.log('PetShop was upgrated to ', petShopV2.address)
 }
 
 // excute contract deployment

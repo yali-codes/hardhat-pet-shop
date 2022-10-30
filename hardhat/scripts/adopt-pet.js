@@ -34,7 +34,7 @@ async function main() {
 
   // deploy PetShop Contract
   const PetShopContract = await ethers.getContractFactory('PetShop')
-  const petShop = await PetShopContract.deploy()
+  const petShop = await upgrades.deployProxy(PetShopContract, [], { initializer: 'setOwner' })
   await petShop.deployed()
   await saveAppFiles('PetShop', petShop.address)
 

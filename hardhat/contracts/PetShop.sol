@@ -5,6 +5,8 @@ import 'hardhat/console.sol';
 // deployed to Goerli at 0xA3abbDA93A850758F85598A47cf186C0BCA085aC
 
 contract PetShop {
+	uint256 x;
+
   // define struct of the pet
   struct Pet {
     address adopter;
@@ -27,10 +29,15 @@ contract PetShop {
   // what happens within your contract.
   event TransferEvent(address indexed from, address indexed to, uint256 value);
 
-  constructor() {
-    // the owner of contract
+  // constructor() {
+  //   // the owner of contract
+  //   owner = payable(msg.sender);
+  // }
+
+	function setOwner() external {
+		// the owner of contract
     owner = payable(msg.sender);
-  }
+	}
 
   // function to check pet's adopted status
   function isAdopted(uint256 petId) external view returns (bool) {
@@ -61,13 +68,13 @@ contract PetShop {
   }
 
   // fucntion to transfer
-  function transfer(address payable to, uint amount) external {
+  function transfer(address payable to, uint256 amount) external {
     require(address(this).balance > 0, 'Not enough tokens');
 
     // transfer the amount.
-    (bool success, ) = to.call{value: amount}("");
-		console.log("result: %s", success);
-		require(success, "Transfer failed");
+    (bool success, ) = to.call{ value: amount }('');
+    console.log('result: %s', success);
+    require(success, 'Transfer failed');
 
     // notify off-chain applications of the transfer.
     emit TransferEvent(owner, to, amount);
