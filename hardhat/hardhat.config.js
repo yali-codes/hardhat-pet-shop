@@ -1,7 +1,8 @@
-require('./tasks/faucet.js')
-require('@nomicfoundation/hardhat-toolbox')
 require('@openzeppelin/hardhat-upgrades')
+require('@nomicfoundation/hardhat-toolbox')
 require('dotenv').config()
+
+require('./tasks/faucet.js')
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
       chainId: 1337,
     },
     goerli: {
-      url: process.env.GOERLI_URL,
+      url: process.env.RPC_URL,
       accounts: [process.env.PRIVATE_KEY],
     },
   },

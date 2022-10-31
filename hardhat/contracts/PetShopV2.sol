@@ -5,6 +5,9 @@ import 'hardhat/console.sol';
 // deployed to Goerli at 0xA3abbDA93A850758F85598A47cf186C0BCA085aC
 
 contract PetShopV2 {
+  // define the name of the store
+  string public name;
+
   // define struct of the pet
   struct Pet {
     address adopter;
@@ -27,15 +30,10 @@ contract PetShopV2 {
   // what happens within your contract.
   event TransferEvent(address indexed from, address indexed to, uint256 value);
 
-  // constructor() {
-  //   // the owner of contract
-  //   owner = payable(msg.sender);
-  // }
-
-	function setOwner() external {
-		// the owner of contract
-    owner = payable(msg.sender);
-	}
+  function setOwner() public {
+		name = "Devie's Pet Shop";
+    owner = payable(msg.sender); // the owner of contract
+  }
 
   // function to check pet's adopted status
   function isAdopted(uint256 petId) external view returns (bool) {
@@ -66,23 +64,27 @@ contract PetShopV2 {
   }
 
   // fucntion to transfer
-  function transfer(address payable to, uint amount) external {
+  function transfer(address payable to, uint256 amount) external {
     require(address(this).balance > 0, 'Not enough tokens');
 
     // transfer the amount.
-    (bool success, ) = to.call{value: amount}("");
-		console.log("result: %s", success);
-		require(success, "Transfer failed");
+    (bool success, ) = to.call{ value: amount }('');
+    console.log('result: %s', success);
+    require(success, 'Transfer failed');
 
     // notify off-chain applications of the transfer.
     emit TransferEvent(owner, to, amount);
   }
 
+  // function to get the balance of contract
   function getBalance() external view returns (uint256) {
     return address(this).balance;
   }
 
-	function sayHello() external pure returns (string memory) {
-		return "Hlelo, solidity.";
-	}
+  // function to change the name of the store
+  function setName(string memory _name) external returns (bool) {
+    require(bytes(_name).length > 0, 'Not null');
+    name = _name;
+    return true;
+  }
 }

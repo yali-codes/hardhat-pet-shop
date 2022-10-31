@@ -11,6 +11,7 @@
 			"@router/*": ["./src/router/*"],
 			"@components/*": ["./src/components/*"],
 			"@directives/*": ["./src/directives/*"],
+			"@contracts/*": ["./src/contracts/*"],
 			"@libs/*": ["./src/libs/*"]
 		}
 	},

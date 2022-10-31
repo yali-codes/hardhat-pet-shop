@@ -5,7 +5,8 @@ import 'hardhat/console.sol';
 // deployed to Goerli at 0xA3abbDA93A850758F85598A47cf186C0BCA085aC
 
 contract PetShop {
-	uint256 x;
+	// define the name of the store
+  string public name;
 
   // define struct of the pet
   struct Pet {
@@ -22,20 +23,13 @@ contract PetShop {
   // define variable for adoped pet list
   uint256[] public adoptedPets;
 
-  // a mapping is a key/value map. Here we store each account balance.
-  mapping(address => uint256) balances;
-
   // the Recharge event helps off-chain aplications understand
   // what happens within your contract.
   event TransferEvent(address indexed from, address indexed to, uint256 value);
 
-  // constructor() {
-  //   // the owner of contract
-  //   owner = payable(msg.sender);
-  // }
-
-	function setOwner() external {
+	function setOwner() public {
 		// the owner of contract
+		name = "Devie's Pet Shop";
     owner = payable(msg.sender);
 	}
 
@@ -80,6 +74,7 @@ contract PetShop {
     emit TransferEvent(owner, to, amount);
   }
 
+	// function to get the balance of contract
   function getBalance() external view returns (uint256) {
     return address(this).balance;
   }

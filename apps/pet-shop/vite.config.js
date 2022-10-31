@@ -24,6 +24,7 @@ export default defineConfig({
       '@router': resolve(__dirname, './src/router'),
       '@components': resolve(__dirname, './src/components'),
       '@directives': resolve(__dirname, './src/directives'),
+      '@contracts': resolve(__dirname, './src/contracts'),
       '@libs': resolve(__dirname, './src/libs'),
     },
   },

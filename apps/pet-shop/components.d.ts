@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    BuyTokens: typeof import('./src/components/BuyTokens.vue')['default']
     Config: typeof import('./src/components/config/Config.vue')['default']
     Dialog: typeof import('./src/components/config/Dialog.vue')['default']
     LoadingBar: typeof import('./src/components/config/LoadingBar.vue')['default']
@@ -15,5 +14,6 @@ declare module '@vue/runtime-core' {
     Notification: typeof import('./src/components/config/Notification.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    WithDdraw: typeof import('./src/components/WithDdraw.vue')['default']
   }
 }

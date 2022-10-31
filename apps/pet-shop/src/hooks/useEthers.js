@@ -1,5 +1,6 @@
 import { ethers } from 'ethers'
 import { ethState } from '@stores/index'
+import contractAddress from '@contracts/contracts-address.json'
 
 export default function useEthers() {
   let _provider = null
@@ -9,13 +10,9 @@ export default function useEthers() {
     try {
       // read json file of all contracts
       // create the instance of each contract.
-      const files = import.meta.glob('../contracts/*.json')
-      for (const key in files) {
-        const artifact = await files[key]()
-        ethState.addContractMeta(
-          artifact.contractName,
-          new ethers.Contract(artifact.address, artifact.abi, _provider.getSigner(0))
-        )
+      for (const key in contractAddress) {
+        const artifact = await import(`../contracts/${key}.json`)
+        ethState.addContractMeta(key, new ethers.Contract(contractAddress[key], artifact.abi, _provider.getSigner(0)))
       }
 
       return true

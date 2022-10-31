@@ -16,7 +16,6 @@
           <strong>Account: </strong>
           <span>{{ account || 'no account' }}</span>
         </p>
-
         <template v-if="account">
           <p>
             <strong>Balances: </strong>
@@ -79,7 +78,7 @@ export default {
 <script setup>
 import petData from './pet-data'
 import AdoptPet from './components/AdoptPet.vue'
-import BuyTokens from '@components/BuyTokens.vue'
+import BuyTokens from '@components/WithDdraw.vue'
 import { ethState, walletState } from '@stores/index'
 import { useAssets, useMetaMask, useEthers } from '@hooks/index'
 import { onMounted, ref, computed } from 'vue'
@@ -87,6 +86,8 @@ import { NButton, useMessage } from 'naive-ui'
 
 // instance of the PetShop contract
 const petShop = ethState.getContract('PetShop')
+
+console.log('devie::', petShop)
 
 // reactivity varialbles
 const pets = ref(petData)
@@ -104,6 +105,7 @@ const { getMetaMaskAccounts, onMetaMaskSelectedAccountChanged } = useMetaMask()
 
 onMounted(() => {
   try {
+    _testCallProxyFn()
     _markAdoptedPets()
     _listenAccountChanged()
     _monitorBlockEvent()
@@ -111,6 +113,10 @@ onMounted(() => {
     console.error(err)
   }
 })
+
+async function _testCallProxyFn() {
+  console.log(await petShop.sayHello())
+}
 
 function _listenAccountChanged() {
   onMetaMaskSelectedAccountChanged(

@@ -15,7 +15,8 @@
     "dev:pet": "pnpm --filter @app/pet dev",
     "dev:serve": "pnpm --filter serve dev",
     "dev:migrate": "pnpm --filter serve dev:migrate",
-    "dev:upgrade": "pnpm --filter serve dev:upgrade",
+    "dev:up": "pnpm --filter serve dev:up",
+    "dev:up:bug": "pnpm --filter serve dev:up:bug",
     "test:serve": "pnpm --filter serve test"
   },
   "repository": {

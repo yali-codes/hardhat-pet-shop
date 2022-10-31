@@ -14,17 +14,14 @@ task('faucet', 'Sends ETH and tokens to an address')
       )
     }
 
-    const artifactDir = path.join(__dirname, '../../apps/pet-shop/src/contracts/PetShop.json')
-
-    if (!fs.existsSync(artifactDir)) {
+    const contractsAddressFilepaht = path.join(__dirname, '../../apps/pet-shop/src/contracts/contracts-address.json')
+    if (!fs.existsSync(contractsAddressFilepaht)) {
       console.error('You need to deploy your contract first')
       return
     }
 
-    const result = fs.readFileSync(artifactDir, { encoding: 'utf-8' })
-    const artifact = JSON.parse(result)
-
-    if ((await ethers.provider.getCode(artifact.address)) === '0x') {
+    const artifact = JSON.parse(fs.readFileSync(contractsAddressFilepaht, { encoding: 'utf-8' }))
+    if ((await ethers.provider.getCode(artifact.PetShop)) === '0x') {
       console.error('You need to deploy your contract first')
       return
     }
