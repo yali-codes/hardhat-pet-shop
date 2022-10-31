@@ -7,11 +7,11 @@ async function main() {
   // console.log('deploying the contracts with the account:', await deployer.getAddress())
 
   // deploy contract
-  const proxyContractAddr = '0x610178dA211FEF7D417bC0e6FeD39F05609AD788'
+  const proxyContractAddr = '0x6e5f886C66B9263205857A0f9FdD3bCF77f15Ac9'
   const PetShopV2 = await ethers.getContractFactory('PetShopV2')
   const instance = await upgrades.upgradeProxy(proxyContractAddr, PetShopV2)
   await saveAppFiles('PetShopV2', { named: 'PetShop' })
-  console.log('PetShopV2 was upgrated to', instance.address)
+  console.log('PetShop was upgrated to', instance.address)
 
   // local network
   // console.log('PetShop was deployed to', instance.address)

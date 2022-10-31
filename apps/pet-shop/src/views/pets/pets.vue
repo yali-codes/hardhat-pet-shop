@@ -105,7 +105,6 @@ const { getMetaMaskAccounts, onMetaMaskSelectedAccountChanged } = useMetaMask()
 
 onMounted(() => {
   try {
-    _testCallProxyFn()
     _markAdoptedPets()
     _listenAccountChanged()
     _monitorBlockEvent()
@@ -113,10 +112,6 @@ onMounted(() => {
     console.error(err)
   }
 })
-
-async function _testCallProxyFn() {
-  console.log(await petShop.sayHello())
-}
 
 function _listenAccountChanged() {
   onMetaMaskSelectedAccountChanged(

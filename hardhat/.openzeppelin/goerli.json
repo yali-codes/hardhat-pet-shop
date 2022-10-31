@@ -1,10 +1,20 @@
 {
   "manifestVersion": "3.2",
-  "proxies": [],
+  "admin": {
+    "address": "0x51aC89414924B7388f939eF16590900aF5cb1b7C",
+    "txHash": "0x138d2399345d6c76b5f4fe1804cc1d17a05e867f245eddbeda07096a38f5ed67"
+  },
+  "proxies": [
+    {
+      "address": "0x6e5f886C66B9263205857A0f9FdD3bCF77f15Ac9",
+      "txHash": "0x62dcd48280edac39e43c54b02f4e85040de1470980da96407bd11ffaf6169baf",
+      "kind": "transparent"
+    }
+  ],
   "impls": {
     "cb08567fa2a6390c619d6195a0e8abf8de44d0637c10ba63ee8177897b702c14": {
-      "address": "0xf1DAbDfeBD87D74dA7A80d9e1fa08Ce18AB7B90f",
-      "txHash": "0xcef81e4838296ccb672b5bcc9bc781cd8318ed718b841044e7326dd3c904a80c",
+      "address": "0x8A0684e6254aCC03D5175898709F7D8A8Dd87fc8",
+      "txHash": "0x6a73a167b808fe73097537bd93cdf6fc75a4785c799b20f995b9f4bb4819e0b0",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
@@ -68,6 +78,107 @@
           },
           "t_struct(Pet)9_storage": {
             "label": "struct PetShop.Pet",
+            "members": [
+              {
+                "label": "adopter",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adopted",
+                "type": "t_bool",
+                "offset": 20,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "44c4980aa1fa5a0a9643f89a638aba936668df16e863501ca30ab2a66a71a0ef": {
+      "address": "0x6F47d343AcF2561bcb77e5407E5df0A8398eB988",
+      "txHash": "0x4886c629b2ebf6db70563ba2e7a7675fa3e0c4329e704d454067a526ec36a6bd",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_string_storage",
+            "contract": "PetShopV2",
+            "src": "contracts\\PetShopV2.sol:9"
+          },
+          {
+            "label": "owner",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address_payable",
+            "contract": "PetShopV2",
+            "src": "contracts\\PetShopV2.sol:18"
+          },
+          {
+            "label": "pets",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_struct(Pet)203_storage)",
+            "contract": "PetShopV2",
+            "src": "contracts\\PetShopV2.sol:21"
+          },
+          {
+            "label": "adoptedPets",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "PetShopV2",
+            "src": "contracts\\PetShopV2.sol:24"
+          },
+          {
+            "label": "balances",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "PetShopV2",
+            "src": "contracts\\PetShopV2.sol:27"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Pet)203_storage)": {
+            "label": "mapping(uint256 => struct PetShopV2.Pet)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Pet)203_storage": {
+            "label": "struct PetShopV2.Pet",
             "members": [
               {
                 "label": "adopter",
