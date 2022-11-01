@@ -1,7 +1,7 @@
 <template>
   <div class="pets-page">
     <div class="pet-title">
-      <span>Devie's Pet Shop</span>
+      <span>{{ name }}</span>
       <div class="pet-title-right-btns">
         <template v-if="!account">
           <n-button size="small" type="primary" @click="connectWalletHandler">Connect Wallet</n-button>
@@ -87,9 +87,8 @@ import { NButton, useMessage } from 'naive-ui'
 // instance of the PetShop contract
 const petShop = ethState.getContract('PetShop')
 
-console.log('devie::', petShop)
-
 // reactivity varialbles
+const name = ref('')
 const pets = ref(petData)
 const adoptPetRef = ref(null)
 const buyTokenRef = ref(null)
@@ -105,7 +104,7 @@ const { getMetaMaskAccounts, onMetaMaskSelectedAccountChanged } = useMetaMask()
 
 onMounted(() => {
   try {
-    _markAdoptedPets()
+    _initializeData()
     _listenAccountChanged()
     _monitorBlockEvent()
   } catch (err) {
@@ -130,11 +129,12 @@ function _monitorBlockEvent() {
   petShop.on('TransferEvent', (from, to, value) => {
     console.log('TransferEvent::', from, to, value)
     walletState.setBalances(account.value)
-    _markAdoptedPets()
+    _initializeData()
   })
 }
 
-async function _markAdoptedPets() {
+async function _initializeData() {
+  name.value = await petShop.name()
   const petIds = await petShop.getAdoptedPets()
   if (petIds.length) {
     const tempPetIds = petIds.map(petId => Number(petId))

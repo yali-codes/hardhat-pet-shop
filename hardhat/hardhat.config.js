@@ -14,8 +14,7 @@ module.exports = {
     goerli: {
       url: process.env.RPC_URL,
       accounts: [process.env.PRIVATE_KEY],
-      chainId: 5,
-      gas: 80000000,
+      // gas: 80000000, // delete it when contract upgrading
     },
   },
 }

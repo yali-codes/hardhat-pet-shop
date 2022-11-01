@@ -2,7 +2,7 @@
 pragma solidity ^0.8.9;
 import 'hardhat/console.sol';
 
-// deployed to Goerli at 0xA3abbDA93A850758F85598A47cf186C0BCA085aC
+// deployed to Goerli at 0x6e5f886C66B9263205857A0f9FdD3bCF77f15Ac9
 
 contract PetShopV2 {
   // define the name of the store
