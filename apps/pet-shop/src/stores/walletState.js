@@ -4,11 +4,11 @@ import ethState from './ethState'
 
 export default reactive({
   account: null,
-  balances: null,
+  balance: null,
   setAccount(account) {
     this.account = account
     if (!account) {
-      this.balances = null
+      this.balance = null
       return
     }
 
@@ -18,6 +18,6 @@ export default reactive({
     const _provider = ethState.getProvider()
     const balance = await _provider.getBalance(account)
 
-    this.balances = Number(ethers.utils.formatEther(balance))
+    this.balance = Number(ethers.utils.formatEther(balance))
   },
 })

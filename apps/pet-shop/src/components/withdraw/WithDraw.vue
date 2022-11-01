@@ -1,23 +1,23 @@
 <template>
-  <div ref="modalRef" class="buy-tokens-wrapper">
+  <div ref="modalRef" class="withdraw-balance-wrapper">
     <n-modal
-      style="width: 500px"
+      style="width: 430px"
       preset="dialog"
       positive-text="Confirm"
       negative-text="Cancel"
-      title="Decide to buy some tokens?"
+      title="Withdraw the balance?"
       :to="modalRef"
       :mask-closable="false"
       v-model:show="visiable"
       @positive-click="confirmHandler"
       @negative-click="cancelHandler"
     >
-      <n-form ref="formRef" label-placement="left" size="small" :label-width="60" :model="formModel" :rules="rules">
-        <n-form-item label="To" path="to">
-          <n-input readonly v-model:value="formModel.to" />
+      <n-form ref="formRef" size="small" :label-width="80" :model="formModel" :rules="rules">
+        <n-form-item label="Contract total" path="balance">
+          <n-input disabled v-model:value="formModel.balance" />
         </n-form-item>
-        <n-form-item label="From" path="from">
-          <n-input readonly v-model:value="formModel.from" />
+        <n-form-item label="Receiver" path="to">
+          <n-input disabled v-model:value="formModel.to" />
         </n-form-item>
         <n-form-item label="Value" path="amount">
           <n-input v-model:value="formModel.amount" />
@@ -46,7 +46,7 @@ const rules = {
     { required: true, message: 'Value needs to require.', trigger: 'blur' },
     {
       pattern: /^\d+(\.\d+)?$/,
-      message: 'Value should be begined with a number and ended with a number and can contain decimal.',
+      message: 'Please enter a valid number!',
       trigger: ['input', 'blur'],
     },
   ],
@@ -59,28 +59,33 @@ const petShop = ethState.getContract('PetShop')
 const visiable = ref(false)
 const modalRef = ref(null)
 const formModel = ref({})
+const transfering = ref(false)
 
 // use hooks
 const message = useMessage()
-const { createActivedWallet } = useEthers()
-const wallet = createActivedWallet()
+const { ethers } = useEthers()
 
 // function to confirm
 async function confirmHandler() {
-  visiable.value = false
-
   const { amount, to } = toRaw(formModel.value)
-  const bigAmount = (amount * Math.pow(10, 18)).toString()
+  const bigAmount = ethers.utils.parseEther(amount)
 
   try {
-    const tx = await wallet.sendTransaction({ to, value: bigAmount })
-    const txRes = await tx.wait()
-    if (txRes.status === 0) {
-      return message.error('Transeried failed!')
+    const tx = await petShop.transfer(to, bigAmount)
+    const res = await tx.wait()
+    transfering.value = true
+    if (res.status === 1) {
+      visiable.value = false
+      message.success('Transfer successfully!')
+    } else {
+      transfering.value = false
+      message.error('Transfer failed!')
     }
-
-    await petShop.transfer(to, bigAmount)
+    console.log('devie::', res)
   } catch (err) {
+    if (err.code === 'ACTION_REJECTED') {
+      message.error('User denied transaction signature!')
+    }
     console.error(err)
   }
 }
@@ -92,14 +97,12 @@ function cancelHandler() {
 
 // function to show modal
 async function show() {
-  try {
-    const to = walletState.account
-    const from = await petShop.owner()
-    formModel.value = { from, to }
-    visiable.value = true
-  } catch (err) {
-    console.error(err)
-  }
+  visiable.value = true
+  transfering.value = false
+  const to = walletState.account
+  const from = await petShop.owner()
+  const balance = ethers.utils.formatEther(await petShop.getBalance())
+  formModel.value = { from, to, balance, amount: balance }
 }
 
 // expose methods or properties, etc.
@@ -107,7 +110,7 @@ defineExpose({ show })
 </script>
 
 <style lang="less" scoped>
-.buy-tokens-wrapper {
+.withdraw-balance-wrapper {
   :deep(.n-form) {
     margin-top: 20px;
   }

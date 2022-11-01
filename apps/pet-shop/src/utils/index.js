@@ -503,3 +503,30 @@ export function uuid(len, radix) {
 
   return uuid.join('')
 }
+
+/**
+ * format account
+ * @param {string} address metaMask's account
+ */
+export function formatAddress(address = '') {
+  if (!address) {
+    return ''
+  }
+
+  const end = address.substr(-4)
+  const start = address.substring(0, 4)
+  console.log(start, end)
+  return `${start}...${end}`
+}
+
+/**
+ * get formated balance
+ * @param {number} balance account‘s balance
+ * @returns formated balance
+ */
+export function formatBalance(balance) {
+  if (!balance) return 0
+
+  const [, integers, decimals] = (balance + '').match(/^([0-9]+)(?:(\.[0-9]{4})\d+)?$/)
+  return Number(`${integers}${decimals || ''}`)
+}

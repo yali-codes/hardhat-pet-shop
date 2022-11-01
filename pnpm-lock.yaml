@@ -25,7 +25,7 @@ importers:
       prettier: ^2.7.1
       ts-node: ^10.9.1
       typescript: ^4.8.4
-      unplugin-vue-components: ^0.22.9
+      unplugin-vue-components: 0.22.8
       vite: ^3.2.2
       vue: ^3.2.41
       vue-router: ^4.1.6
@@ -54,7 +54,7 @@ importers:
       prettier: 2.7.1
       ts-node: 10.9.1_typescript@4.8.4
       typescript: 4.8.4
-      unplugin-vue-components: 0.22.9_vue@3.2.41
+      unplugin-vue-components: 0.22.8_vue@3.2.41
       vite: 3.2.2_less@4.1.3
 
   apps/pet-shop:
@@ -92,8 +92,8 @@ importers:
 
 packages:
 
-  /@antfu/utils/0.6.1:
-    resolution: {integrity: sha512-X3cfmHwiQ3qNQclfDNxFSjpqYVlhUjTj59cV/P9DfRy0zpEWDRcwI4yaqfxvWyJKlg1uhNApoK9YNKjX5SQfQA==}
+  /@antfu/utils/0.5.2:
+    resolution: {integrity: sha512-CQkeV+oJxUazwjlHD0/3ZD08QWKuGQkhnrKo3e6ly5pd48VUpXbb77q0xMU4+vc2CkJnDS02Eq/M9ugyX20XZA==}
     dev: true
 
   /@babel/code-frame/7.12.11:
@@ -1041,16 +1041,10 @@ packages:
       - supports-color
     dev: true
 
-  /@rollup/pluginutils/5.0.2:
-    resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
+  /@rollup/pluginutils/4.2.1:
+    resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
+    engines: {node: '>= 8.0.0'}
     dependencies:
-      '@types/estree': 1.0.0
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
@@ -1232,10 +1226,6 @@ packages:
     resolution: {integrity: sha512-eHE4cQPoj6ngxBZMvVf6Hw7Mh4jMW4U9lpGmS5GBPB9RYxlFg+CHaVN7ErNY4W9XfLIEn20b4VDYaIrbq0q4uA==}
     dependencies:
       '@types/node': 18.11.5
-    dev: true
-
-  /@types/estree/1.0.0:
-    resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
 
   /@types/form-data/0.0.33:
@@ -6305,8 +6295,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /unplugin-vue-components/0.22.9_vue@3.2.41:
-    resolution: {integrity: sha512-qBvooq3EgpjtYicxeccRUGUBBQCCw9rJ0kHPZPOSJd8TBZViSv86vuKLTRDHPyjWtclwOIkVStZJfPdJFhYUMw==}
+  /unplugin-vue-components/0.22.8_vue@3.2.41:
+    resolution: {integrity: sha512-Musnwdtr6uj9Zopo4oeh4lp9+fJ2ArXVDzSiZxF4YC9v+pLnasKVKEEAjdXuQQ3u3KtntVw6PCscyAt52eS75g==}
     engines: {node: '>=14'}
     peerDependencies:
       '@babel/parser': ^7.15.8
@@ -6315,8 +6305,8 @@ packages:
       '@babel/parser':
         optional: true
     dependencies:
-      '@antfu/utils': 0.6.1
-      '@rollup/pluginutils': 5.0.2
+      '@antfu/utils': 0.5.2
+      '@rollup/pluginutils': 4.2.1
       chokidar: 3.5.3
       debug: 4.3.4
       fast-glob: 3.2.12
@@ -6324,15 +6314,14 @@ packages:
       magic-string: 0.26.7
       minimatch: 5.1.0
       resolve: 1.22.1
-      unplugin: 0.10.2
+      unplugin: 0.9.6
       vue: 3.2.41
     transitivePeerDependencies:
-      - rollup
       - supports-color
     dev: true
 
-  /unplugin/0.10.2:
-    resolution: {integrity: sha512-6rk7GUa4ICYjae5PrAllvcDeuT8pA9+j5J5EkxbMFaV+SalHhxZ7X2dohMzu6C3XzsMT+6jwR/+pwPNR3uK9MA==}
+  /unplugin/0.9.6:
+    resolution: {integrity: sha512-YYLtfoNiie/lxswy1GOsKXgnLJTE27la/PeCGznSItk+8METYZErO+zzV9KQ/hXhPwzIJsfJ4s0m1Rl7ZCWZ4Q==}
     dependencies:
       acorn: 8.8.1
       chokidar: 3.5.3

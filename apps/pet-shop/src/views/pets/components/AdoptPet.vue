@@ -4,7 +4,7 @@
     positive-text="Confirm"
     negative-text="Cancel"
     :mask-closable="false"
-    :title="`Decide to adopt the pet named ${selectedPet.name}?`"
+    :title="`Adopt a pet named ${selectedPet.name}?`"
     v-model:show="visiable"
     @positive-click="positiveClickHandler"
     @negative-click="negativeClickHandler"
@@ -26,7 +26,7 @@ import { NModal } from 'naive-ui'
 const visiable = ref(false)
 const selectedPet = ref({})
 
-const emit = defineEmits(['on-confirm'])
+const emit = defineEmits(['on-confirm', 'on-cancel'])
 
 // function to confirm
 function positiveClickHandler() {
@@ -38,6 +38,7 @@ function positiveClickHandler() {
 // function to cancel
 function negativeClickHandler() {
   visiable.value = false
+  emit('on-cancel')
 }
 
 // function to show modal

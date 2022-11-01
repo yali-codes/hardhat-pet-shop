@@ -38,9 +38,10 @@ export default function useEthers() {
     return _initialilzeContract()
   }
 
-  function createActivedWallet() {
-    return new ethers.Wallet('0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', ethState.getProvider())
+  function twoAddressAreEqual(addr1, addr2) {
+    const { getAddress } = ethers.utils
+    return getAddress(addr1) === getAddress(addr2)
   }
 
-  return { initializeEthers, createActivedWallet, ethers }
+  return { initializeEthers, twoAddressAreEqual, ethers }
 }

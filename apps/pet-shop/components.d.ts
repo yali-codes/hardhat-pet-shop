@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     Notification: typeof import('./src/components/config/Notification.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    WithDdraw: typeof import('./src/components/WithDdraw.vue')['default']
+    WithDdraw: typeof import('./src/components/withdraw/WithDraw.vue')['default']
+    WithDraw: typeof import('./src/components/withdraw/WithDraw.vue')['default']
   }
 }
