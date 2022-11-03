@@ -1,5 +1,6 @@
-const { expect } = require('chai')
-const { loadFixture } = require('@nomicfoundation/hardhat-network-helpers')
+import { expect } from 'chai'
+import { loadFixture } from '@nomicfoundation/hardhat-network-helpers'
+import { ethers, upgrades } from 'hardhat'
 
 // pets's ids
 const petIds = [1, 2, 3]

@@ -1,4 +1,6 @@
-const { saveAppFiles } = require('./helper')
+import { saveAppFiles } from './helper'
+import { ethers, network, upgrades } from 'hardhat'
+import { Contract } from 'ethers'
 
 async function main() {
   if (network.name === 'hardhat') {
@@ -12,13 +14,13 @@ async function main() {
   // local network
   // const [deployer] = await ethers.getSigners()
   // console.log('Account balances:', (await deployer.getBalance()).toString())
-  // console.log('deploying the contracts with the account:', await deployer.getAddress())
+  // console.log('deploying the contract with the account:', await deployer.getAddress())
 
   // deploy contract
   const PetShop = await ethers.getContractFactory('PetShop')
-  const instance = await upgrades.deployProxy(PetShop, [], { initializer: 'setOwner' })
+  const instance: Contract = await upgrades.deployProxy(PetShop, [], { initializer: 'setOwner' })
   await instance.deployed()
-  await saveAppFiles('PetShop', { address: instance.address })
+  saveAppFiles('PetShop', { address: instance.address })
   console.log('PetShop was deployed to', instance.address)
 
   // local network

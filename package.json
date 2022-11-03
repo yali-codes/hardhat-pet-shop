@@ -6,6 +6,7 @@
   "scripts": {
     "del": "pnpm -r del",
     "h": "pnpm --filter serve h",
+    "hat": "pnpm --filter serve hat",
     "clean": "rimraf node_modules **/*/node_modules",
     "build": "pnpm --filter @app/pet build",
     "faucet": "pnpm --filter serve faucet",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@types/chai": "^4.3.3",
     "@types/mocha": "^9.1.1",
+    "@types/node": "^18.11.9",
     "@vitejs/plugin-vue": "^3.2.0",
     "babel-eslint": "^10.1.0",
     "chai": "^4.3.6",

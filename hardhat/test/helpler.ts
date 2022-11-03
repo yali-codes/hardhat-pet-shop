@@ -4,8 +4,6 @@
  * @param {string} address account's address
  * @returns account's balance
  */
-async function getBalance(provider, address) {
+export const getBalance = async (provider, address) => {
   return await provider.getBalance(address)
 }
-
-module.exports = { getBalance }
