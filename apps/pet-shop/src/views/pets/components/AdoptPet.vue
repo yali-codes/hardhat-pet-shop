@@ -13,46 +13,47 @@
   </n-modal>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'AdoptPet',
-}
+};
 </script>
 
-<script setup>
-import { ref } from 'vue'
-import { NModal } from 'naive-ui'
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { NModal } from 'naive-ui';
+import { Pet } from '@interfaces/index';
 
-const visiable = ref(false)
-const selectedPet = ref({})
+const visiable = ref<boolean>(false);
+const selectedPet = ref<Pet>({});
 
-const emit = defineEmits(['on-confirm', 'on-cancel'])
+const emit = defineEmits(['on-confirm', 'on-cancel']);
 
 // function to confirm
-function positiveClickHandler() {
-  visiable.value = false
-  const { id, price } = selectedPet.value
-  emit('on-confirm', { id, price })
+function positiveClickHandler(): void {
+  visiable.value = false;
+  const { id, price } = selectedPet.value;
+  emit('on-confirm', { id, price });
 }
 
 // function to cancel
-function negativeClickHandler() {
-  visiable.value = false
-  emit('on-cancel')
+function negativeClickHandler(): void {
+  visiable.value = false;
+  emit('on-cancel');
 }
 
 // function to show modal
-function show(pet) {
+function show(pet: Pet): void {
   if (!pet) {
-    throw new Error('Pet name needs to require.')
+    throw new Error('Pet name needs to require.');
   }
 
-  selectedPet.value = pet
-  visiable.value = true
+  selectedPet.value = pet;
+  visiable.value = true;
 }
 
 // expose methods or properties, etc.
-defineExpose({ show })
+defineExpose({ show });
 </script>
 
 <style lang="less" scoped>

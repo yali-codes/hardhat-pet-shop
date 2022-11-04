@@ -1,8 +1,8 @@
-import { resolve } from 'path'
-import { defineConfig } from 'vite'
-import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
-import Components from 'unplugin-vue-components/vite'
-import vue from '@vitejs/plugin-vue'
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
+import Components from 'unplugin-vue-components/vite';
+import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
   plugins: [
@@ -26,10 +26,11 @@ export default defineConfig({
       '@directives': resolve(__dirname, './src/directives'),
       '@contracts': resolve(__dirname, './src/contracts'),
       '@libs': resolve(__dirname, './src/libs'),
+      '@interfaces': resolve(__dirname, './src/interfaces'),
     },
   },
   build: {
     sourcemap: true,
     emptyOutDir: true,
   },
-})
+});

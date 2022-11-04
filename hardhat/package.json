@@ -3,7 +3,7 @@
   "main": "index.js",
   "scripts": {
     "h": "pnpm hardhat help",
-    "del": "rimraf artifacts && rimraf cache",
+    "del": "rimraf artifacts && rimraf cache && rimraf .openzeppelin/unknown-*.json",
     "dev": "pnpm hardhat node",
     "compile": "pnpm hardhat compile",
     "faucet": "pnpm hardhat --network localhost faucet 0xe46363801A8BC6b0C7d331200b0d0f0a86daD3EC",
@@ -28,6 +28,7 @@
     "hardhat": "^2.12.2",
     "hardhat-gas-reporter": "^1.0.9",
     "solidity-coverage": "^0.8.2",
+    "ts-node": "^10.9.1",
     "typechain": "^8.1.1",
     "typechain-target-ethers-v5": "^5.0.1"
   }

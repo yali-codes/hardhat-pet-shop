@@ -1,4 +1,6 @@
-export const petData = [
+import { Pet } from '@interfaces/pets-types';
+
+export const petData: Pet[] = [
   {
     id: 0,
     name: 'Frieda',
@@ -159,4 +161,4 @@ export const petData = [
     statusText: 'Adopt',
     price: 0.0001,
   },
-]
+];

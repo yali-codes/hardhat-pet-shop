@@ -5,20 +5,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'Home',
-}
+};
 </script>
 
-<script setup>
-import { NButton } from 'naive-ui'
-import { useRouter } from '@router/index'
+<script lang="ts" setup>
+import { NButton } from 'naive-ui';
+import { useRouter, Router } from '@router/index';
 
-const router = useRouter()
-const handleClick = () => {
-  router.push('/pets')
-}
+const router: Router = useRouter();
+const handleClick: () => void = () => {
+  router.push('/pets');
+};
 </script>
 
 <style lang="less" scoped>

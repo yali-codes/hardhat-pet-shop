@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive } from 'vue';
 
 export default function useTheme() {
   const themeConfig = reactive({
@@ -8,7 +8,7 @@ export default function useTheme() {
       primaryColorPressed: '#096dd9',
       primaryColorSuppl: '#4098FC',
     },
-  })
+  });
 
-  return { themeConfig }
+  return { themeConfig };
 }

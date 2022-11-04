@@ -1,4 +1,8 @@
-export const routes = [
+import { RouteRecordRaw } from 'vue-router';
+
+type Routes = RouteRecordRaw & { icon: string };
+
+export const routes: Routes[] = [
   {
     path: '/',
     name: 'home',
@@ -17,4 +21,4 @@ export const routes = [
       title: '宠物商铺',
     },
   },
-]
+];

@@ -6,8 +6,8 @@
       positive-text="Confirm"
       negative-text="Cancel"
       title="Withdraw the balance?"
-      :to="modalRef"
       :mask-closable="false"
+      :to="modalMountedDom"
       v-model:show="visiable"
       @positive-click="confirmHandler"
       @negative-click="cancelHandler"
@@ -27,17 +27,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'BuyTokens',
-}
+};
 </script>
 
-<script setup>
-import { ref, toRaw } from 'vue'
-import { NModal, NForm, NInput, NFormItem, useMessage } from 'naive-ui'
-import { ethState, walletState } from '@stores/index'
-import { useEthers } from '@hooks/index'
+<script lang="ts" setup>
+import { ref, toRaw, computed, ComputedRef } from 'vue';
+import { NModal, NForm, NInput, NFormItem, useMessage } from 'naive-ui';
+import { WithDraw } from '@interfaces/index';
+import { ethState, walletState } from '@stores/index';
+import { useEthers } from '@hooks/index';
 
 const rules = {
   to: { required: true, message: 'To Addr needs to require.', trigger: 'blur' },
@@ -50,63 +51,63 @@ const rules = {
       trigger: ['input', 'blur'],
     },
   ],
-}
+};
 
 // instance of the PetShop contract
-const petShop = ethState.getContract('PetShop')
+const petShop = ethState.getContract('PetShop');
 
 // define some reactivity variables
-const visiable = ref(false)
-const modalRef = ref(null)
-const formModel = ref({})
-const transfering = ref(false)
+const visiable = ref<boolean>(false);
+const modalRef = ref<HTMLElement | null | undefined>(null);
+const formModel = ref<WithDraw>({ to: '', from: '', amount: '', balance: '' });
+const transfering = ref(false);
+const modalMountedDom: ComputedRef = computed(() => modalRef.value);
 
 // use hooks
-const message = useMessage()
-const { ethers } = useEthers()
+const message = useMessage();
+const { ethers } = useEthers();
 
 // function to confirm
 async function confirmHandler() {
-  const { amount, to } = toRaw(formModel.value)
-  const bigAmount = ethers.utils.parseEther(amount)
+  const { amount, to } = toRaw(formModel.value);
+  const bigAmount = ethers.utils.parseEther(amount);
 
   try {
-    const tx = await petShop.transfer(to, bigAmount)
-    const res = await tx.wait()
-    transfering.value = true
+    const tx = await petShop.transfer(to, bigAmount);
+    const res = await tx.wait();
+    transfering.value = true;
     if (res.status === 1) {
-      visiable.value = false
-      message.success('Transfer successfully!')
+      visiable.value = false;
+      message.success('Transfer successfully!');
     } else {
-      transfering.value = false
-      message.error('Transfer failed!')
+      transfering.value = false;
+      message.error('Transfer failed!');
     }
-    console.log('devie::', res)
-  } catch (err) {
-    if (err.code === 'ACTION_REJECTED') {
-      message.error('User denied transaction signature!')
+    console.log('devie::', res);
+  } catch ({ code }) {
+    if (code === 'ACTION_REJECTED') {
+      message.error('User denied transaction signature!');
     }
-    console.error(err)
   }
 }
 
 // function to cancel
 function cancelHandler() {
-  visiable.value = false
+  visiable.value = false;
 }
 
 // function to show modal
 async function show() {
-  visiable.value = true
-  transfering.value = false
-  const to = walletState.account
-  const from = await petShop.owner()
-  const balance = ethers.utils.formatEther(await petShop.getBalance())
-  formModel.value = { from, to, balance, amount: balance }
+  visiable.value = true;
+  transfering.value = false;
+  const to = walletState.account;
+  const from = await petShop.owner();
+  const balance = ethers.utils.formatEther(await petShop.getBalance());
+  formModel.value = { from, to, balance, amount: balance };
 }
 
 // expose methods or properties, etc.
-defineExpose({ show })
+defineExpose({ show });
 </script>
 
 <style lang="less" scoped>

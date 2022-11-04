@@ -10,12 +10,12 @@
   </NLoadingBarProvider>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'Config',
-}
+};
 </script>
 
-<script setup>
-import { NLoadingBarProvider, NDialogProvider, NMessageProvider, NNotificationProvider } from 'naive-ui'
+<script lang="ts" setup>
+import { NLoadingBarProvider, NDialogProvider, NMessageProvider, NNotificationProvider } from 'naive-ui';
 </script>

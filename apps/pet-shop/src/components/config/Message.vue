@@ -1,10 +1,10 @@
-<script>
-import { useMessage } from 'naive-ui'
+<script lang="ts">
+import { useMessage } from 'naive-ui';
 
 const Message = () => {
-  window['$message'] = useMessage() // 全局变量定义
-  return null
-}
+  window['$message'] = useMessage(); // 全局变量定义
+  return null;
+};
 
-export default Message
+export default Message;
 </script>
