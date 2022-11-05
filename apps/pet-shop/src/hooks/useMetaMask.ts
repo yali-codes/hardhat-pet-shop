@@ -1,6 +1,8 @@
+import { MessageProviderInst } from '@interfaces/index';
+
 export default function useMetaMask() {
   // function to get metaMask's accounts
-  const getMetaMaskAccounts = async message => {
+  const getMetaMaskAccounts = async (message: MessageProviderInst) => {
     try {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       console.log('getMetaMaskAccounts::', accounts);

@@ -1,18 +1,20 @@
 import { ethers } from 'ethers';
 import { ethState } from '@stores/index';
-import contractAddress from '@contracts/contracts-address.json';
+import { BaseProvider, JsonRpcProvider } from '@interfaces/index';
+import contractsAddress from '@contracts/contracts-address.json';
 
 export default function useEthers() {
-  let _provider = null;
+  let _provider: BaseProvider;
 
   // initialize all smart contracts
   const _initialilzeContract = async () => {
     try {
       // read json file of all contracts
       // create the instance of each contract.
-      for (const key in contractAddress) {
+      for (const key in contractsAddress) {
         const artifact = await import(`../contracts/${key}.json`);
-        ethState.addContractMeta(key, new ethers.Contract(contractAddress[key], artifact.abi, _provider.getSigner(0)));
+        const address: string = (contractsAddress as any)[key];
+        ethState.addContractMeta(key, new ethers.Contract(address, artifact.abi, (_provider as JsonRpcProvider).getSigner(0)));
       }
 
       return true;

@@ -2,10 +2,20 @@ import { reactive } from 'vue';
 import { ethers } from 'ethers';
 import ethState from './ethState';
 
-export default reactive({
+type Account = string | null;
+type Balance = number | null;
+
+type WalletState = {
+  account: Account;
+  balance: Balance;
+  setAccount: (account: Account) => void;
+  setBalances: (account: Account) => Promise<void>;
+};
+
+export default reactive<WalletState>({
   account: null,
   balance: null,
-  setAccount(account: string | null) {
+  setAccount(account: Account) {
     this.account = account;
     if (!account) {
       this.balance = null;
@@ -14,10 +24,9 @@ export default reactive({
 
     this.setBalances(account);
   },
-  async setBalances(account = this.account) {
+  async setBalances(account: Account) {
     const _provider = ethState.getProvider();
-    const balance = await _provider.getBalance(account);
-
+    const balance: string = await _provider.getBalance(account || this.account);
     this.balance = Number(ethers.utils.formatEther(balance));
   },
 });

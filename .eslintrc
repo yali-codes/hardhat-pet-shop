@@ -10,6 +10,7 @@
 	"parserOptions": {
 		"parser": "babel-eslint"
 	},
+	"plugins": ["@typescript-eslint"],
 	"globals": {
 		"defineProps": "readonly",
 		"defineEmits": "readonly",

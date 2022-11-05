@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+		"target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -12,18 +12,19 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
+		"baseUrl": ".",
 		"paths": {
-			"@utils/*": ["./src/utils/*"],
-			"@hooks/*": ["./src/hooks/*"],
-			"@assets/*": ["./src/assets/*"],
-			"@styles/*": ["./src/styles/*"],
-			"@stores/*": ["./src/stores/*"],
-			"@router/*": ["./src/router/*"],
-			"@components/*": ["./src/components/*"],
-			"@directives/*": ["./src/directives/*"],
-			"@contracts/*": ["./src/contracts/*"],
-			"@libs/*": ["./src/libs/*"],
-			"@interfaces/*": ["./src/interfaces/*"]
+			"@utils/*": ["src/utils/*"],
+			"@hooks/*": ["src/hooks/*"],
+			"@assets/*": ["src/assets/*"],
+			"@styles/*": ["src/styles/*"],
+			"@stores/*": ["src/stores/*"],
+			"@router/*": ["src/router/*"],
+			"@components/*": ["src/components/*"],
+			"@directives/*": ["src/directives/*"],
+			"@contracts/*": ["src/contracts/*"],
+			"@libs/*": ["src/libs/*"],
+			"@interfaces/*": ["src/interfaces/*"]
 		}
   },
 	"exclude": ["node_modules", "public", "dist"],

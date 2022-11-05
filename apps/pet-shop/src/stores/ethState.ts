@@ -1,18 +1,28 @@
-import { reactive, toRaw } from 'vue'
+import { reactive, toRaw } from 'vue';
+import { BaseProvider } from '@interfaces/index';
 
-export default reactive({
+type EthState = {
+  provider: BaseProvider;
+  contracts: any;
+  setProvider: (provider: any) => void;
+  addContractMeta: (contractName: string, contractMeta: any) => void;
+  getContract: (contractName: string) => any;
+  getProvider: () => any;
+};
+
+export default reactive<EthState>({
   provider: null,
   contracts: {},
-  setProvider(provider) {
-    this.provider = provider
+  setProvider(provider: BaseProvider) {
+    this.provider = provider;
   },
-  addContractMeta(contractName, contractMeta) {
-    this.contracts[contractName] = contractMeta
+  addContractMeta(contractName: string, contractMeta: any): any {
+    this.contracts[contractName] = contractMeta;
   },
-  getContract(contractName) {
-    return toRaw(this.contracts[contractName])
+  getContract(contractName: string) {
+    return toRaw(this.contracts[contractName]);
   },
-  getProvider() {
-    return toRaw(this.provider)
+  getProvider(): BaseProvider {
+    return toRaw(this.provider);
   },
-})
+});

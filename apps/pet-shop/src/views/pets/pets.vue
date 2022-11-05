@@ -90,6 +90,7 @@ import { NButton, useMessage } from 'naive-ui';
 
 // instance of the PetShop contract
 const petShop = ethState.getContract('PetShop');
+console.log('petShop::', petShop);
 
 // reactivity varialbles
 const name = ref<string>('');

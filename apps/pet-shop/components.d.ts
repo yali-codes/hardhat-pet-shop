@@ -8,13 +8,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Config: typeof import('./src/components/config/Config.vue')['default']
-    Dialog: typeof import('./src/components/config/Dialog.vue')['default']
-    LoadingBar: typeof import('./src/components/config/LoadingBar.vue')['default']
-    Message: typeof import('./src/components/config/Message.vue')['default']
-    Notification: typeof import('./src/components/config/Notification.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    WithDdraw: typeof import('./src/components/withdraw/WithDraw.vue')['default']
     WithDraw: typeof import('./src/components/withdraw/WithDraw.vue')['default']
   }
 }
