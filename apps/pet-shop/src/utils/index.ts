@@ -457,11 +457,10 @@ export function uuid(len: number, radix: number): string {
  */
 export function formatAddress(address = ''): string {
   if (!address) {
-    return '';
+    return 'no account';
   }
 
-  const end = address.substr(-4);
-  const start = address.substring(0, 4);
+  const [, start, end] = address.match(/(0x[0-9a-zA-Z]{3})[0-9a-zA-Z]+([0-9a-zA-Z]{4})/)!;
   console.log(start, end);
   return `${start}...${end}`;
 }
@@ -474,6 +473,6 @@ export function formatAddress(address = ''): string {
 export function formatBalance(balance: number): number {
   if (!balance) return 0;
 
-  const [, integers, decimals] = (balance + '').match(/^([0-9]+)(?:(\.[0-9]{4})\d+)?$/) || [];
+  const [, integers, decimals] = (balance + '').match(/^([0-9]+)(?:(\.[0-9]{4})\d+)?$/)!;
   return Number(`${integers}${decimals || ''}`);
 }
