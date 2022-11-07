@@ -25,7 +25,7 @@ import { NModal } from 'naive-ui';
 import { Pet } from '@interfaces/index';
 
 const visiable = ref<boolean>(false);
-const selectedPet = ref<Pet>({});
+const selectedPet = ref<Partial<Pet>>({});
 
 const emit = defineEmits(['on-confirm', 'on-cancel']);
 

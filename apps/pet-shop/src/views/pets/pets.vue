@@ -14,7 +14,7 @@
       <div class="user-info">
         <p>
           <strong>Account: </strong>
-          <span>{{ formatAddress(account) || 'no account' }}</span>
+          <span>{{ formatAddress(account) }}</span>
         </p>
         <template v-if="account">
           <p>
@@ -98,7 +98,7 @@ const pets = ref<Pet[]>(petData);
 const isOwner = ref<boolean>(false);
 const adoptPetRef = ref<typeof AdoptPet | null>(null);
 const withdrawRef = ref<typeof WithDraw | null>(null);
-const selectedPet = ref<Pet>({ id: 0, name: '', picture: '', age: 0, breed: '', location: '', statusText: '', price: 0 });
+const selectedPet = ref<Partial<Pet>>({});
 const account: ComputedRef = computed(() => walletState.account);
 const balance: ComputedRef = computed(() => walletState.balance);
 

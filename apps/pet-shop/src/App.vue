@@ -6,12 +6,12 @@
   </NConfigProvider>
 </template>
 
-<script setup>
-import AppConfig from '@components/config'
-import { useTheme } from '@hooks/index'
-import { NConfigProvider, zhCN, dateZhCN } from 'naive-ui'
+<script lang="ts" setup>
+import AppConfig from '@components/config';
+import { useTheme } from '@hooks/index';
+import { NConfigProvider, zhCN, dateZhCN } from 'naive-ui';
 
-const { themeConfig } = useTheme()
+const { themeConfig } = useTheme();
 </script>
 
 <style lang="less">
