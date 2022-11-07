@@ -59,7 +59,7 @@ const petShop = ethState.getContract('PetShop');
 // define some reactivity variables
 const visiable = ref<boolean>(false);
 const modalRef = ref<HTMLElement | null | undefined>(null);
-const formModel = ref<WithDraw>({ to: '', from: '', amount: '', balance: '' });
+const formModel = ref<Partial<WithDraw>>({});
 const transfering = ref(false);
 const modalMountedDom: ComputedRef = computed(() => modalRef.value);
 
@@ -70,9 +70,12 @@ const { ethers } = useEthers();
 // function to confirm
 async function confirmHandler() {
   const { amount, to } = toRaw(formModel.value);
-  const bigAmount = ethers.utils.parseEther(amount);
+  if (!amount) {
+    return message.error('Value is required!');
+  }
 
   try {
+    const bigAmount = ethers.utils.parseEther(amount!);
     const tx = await petShop.transfer(to, bigAmount);
     const res = await tx.wait();
     transfering.value = true;
