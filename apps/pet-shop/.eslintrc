@@ -11,9 +11,14 @@
 	},
 	"plugins": ["@typescript-eslint"],
 	"globals": {
-		"defineProps": "readonly",
+		"$ref": "readonly",
+		"$toRef": "readonly",
+		"$shallowRef": "readonly",
+		"$computed": "readonly",
+		"defineExpose": "readonly",
 		"defineEmits": "readonly",
-		"defineExpose": "readonly"
+		"defineProps": "readonly",
+		"$customRef": "readonly"
 	},
   "rules": {
 		"eqeqeq": 2,

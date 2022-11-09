@@ -1,15 +1,17 @@
 <template>
   <NConfigProvider :locale="zhCN" :date-locale="dateZhCN" :theme-overrides="themeConfig">
-    <AppConfig>
-      <router-view />
-    </AppConfig>
+    <NLoadingBarProvider>
+      <AppConfig>
+        <router-view />
+      </AppConfig>
+    </NLoadingBarProvider>
   </NConfigProvider>
 </template>
 
 <script lang="ts" setup>
 import AppConfig from '@components/config';
 import { useTheme } from '@hooks/index';
-import { NConfigProvider, zhCN, dateZhCN } from 'naive-ui';
+import { NConfigProvider, zhCN, dateZhCN, NLoadingBarProvider } from 'naive-ui';
 
 const { themeConfig } = useTheme();
 </script>

@@ -4,7 +4,8 @@ import { ethState } from '@stores/index';
 import { useEthers } from '@hooks/index';
 import { createApp } from 'vue';
 
-createApp(App).use(router).mount('#app', true);
+const app = createApp(App).use(router);
+router.isReady().then(() => app.mount('#app', true));
 
 // routing front guard
 router.beforeEach(async (_to, _from, next) => {
